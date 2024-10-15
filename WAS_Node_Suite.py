@@ -25,6 +25,7 @@ import comfy.sd
 import comfy.utils
 import comfy.clip_vision
 import comfy.model_management
+import execution_context
 import folder_paths as comfy_paths
 from comfy_extras.chainner_models import model_loading
 import ast
@@ -3943,7 +3944,7 @@ class WAS_Image_Morph_GIF_Writer:
                 "duration_ms": ("FLOAT", {"default":0.1, "min":0.1, "max":60000.0, "step":0.1}),
                 "loops": ("INT", {"default":0, "min":0, "max":100, "step":1}),
                 "max_size": ("INT", {"default":512, "min":128, "max":1280, "step":1}),
-                "output_path": ("STRING", {"default": comfy_paths.output_directory, "multiline": False}),
+                "output_path": ("STRING", {"multiline": False}),
                 "filename": ("STRING", {"default": "morph_writer", "multiline": False}),
             }
         }
@@ -7205,7 +7206,8 @@ class WAS_Export_API:
                 "parse_text_tokens": ("BOOLEAN", {"default": False})
             },
             "hidden": {
-                "prompt": "PROMPT"
+                "prompt": "PROMPT",
+                "user_hash": "USER_HASH"
             }
         }
 
@@ -7216,14 +7218,14 @@ class WAS_Export_API:
     CATEGORY = "WAS Suite/Debug"
 
     def export_api(self, output_path=None, filename_prefix="ComfyUI", filename_number_padding=4,
-                    filename_delimiter='_', prompt=None, save_prompt_api="true", parse_text_tokens=False):
+                    filename_delimiter='_', prompt=None, user_hash='', save_prompt_api="true", parse_text_tokens=False):
         delimiter = filename_delimiter
         number_padding = filename_number_padding if filename_number_padding > 1 else 4
 
         tokens = TextTokens()
 
         if output_path in [None, '', "none", "."]:
-            output_path = comfy_paths.output_directory
+            output_path = comfy_paths.get_output_directory(user_hash)
         else:
             output_path = tokens.parseTokens(output_path)
 
@@ -7281,7 +7283,6 @@ class WAS_Export_API:
 
 class WAS_Image_Save:
     def __init__(self):
-        self.output_dir = comfy_paths.output_directory
         self.type = 'output'
     @classmethod
     def INPUT_TYPES(cls):
@@ -7305,7 +7306,7 @@ class WAS_Image_Save:
                 "show_previews": (["true", "false"],),
             },
             "hidden": {
-                "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"
+                "prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO", "user_hash": "USER_HASH"
             },
         }
 
@@ -7319,7 +7320,7 @@ class WAS_Image_Save:
     CATEGORY = "WAS Suite/IO"
 
     def was_save_images(self, images, output_path='', filename_prefix="ComfyUI", filename_delimiter='_',
-                        extension='png', dpi=96, quality=100, optimize_image="true", lossless_webp="false", prompt=None, extra_pnginfo=None,
+                        extension='png', dpi=96, quality=100, optimize_image="true", lossless_webp="false", prompt=None, extra_pnginfo=None, user_hash='',
                         overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
                         show_history='false', show_history_by_prefix="true", embed_workflow="true",
                         show_previews="true"):
@@ -7332,17 +7333,18 @@ class WAS_Image_Save:
         # Define token system
         tokens = TextTokens()
 
-        original_output = self.output_dir
+        self_output_dir = comfy_paths.get_output_directory(user_hash)
+        original_output = self_output_dir
         # Parse prefix tokens
         filename_prefix = tokens.parseTokens(filename_prefix)
 
         # Setup output path
         if output_path in [None, '', "none", "."]:
-            output_path = self.output_dir
+            output_path = self_output_dir
         else:
             output_path = tokens.parseTokens(output_path)
         if not os.path.isabs(output_path):
-            output_path = os.path.join(self.output_dir, output_path)
+            output_path = os.path.join(self_output_dir, output_path)
         base_output = os.path.basename(output_path)
         if output_path.endswith("ComfyUI/output") or output_path.endswith("ComfyUI\output"):
             base_output = ""
@@ -7350,7 +7352,7 @@ class WAS_Image_Save:
         # Check output destination
         if output_path.strip() != '':
             if not os.path.isabs(output_path):
-                output_path = os.path.join(comfy_paths.output_directory, output_path)
+                output_path = os.path.join(comfy_paths.get_output_directory(user_hash), output_path)
             if not os.path.exists(output_path.strip()):
                 cstr(f'The path `{output_path.strip()}` specified doesn\'t exist! Creating directory.').warning.print()
                 os.makedirs(output_path, exist_ok=True)
@@ -7577,7 +7579,6 @@ class WAS_Image_Send_HTTP:
 class WAS_Load_Image:
 
     def __init__(self):
-        self.input_dir = comfy_paths.input_directory
         self.HDB = WASDatabase(WAS_HISTORY_DATABASE)
 
     @classmethod
@@ -8666,11 +8667,11 @@ class WAS_Latent_Upscale:
         valid_modes = ["area", "bicubic", "bilinear", "nearest"]
         if mode not in valid_modes:
             cstr(f"Invalid interpolation mode `{mode}` selected. Valid modes are: {', '.join(valid_modes)}").error.print()
-            return (s, )
+            return (None, )
         align = True if align == 'true' else False
         if not isinstance(factor, float) or factor <= 0:
             cstr(f"The input `factor` is `{factor}`, but should be a positive or negative float.").error.print()
-            return (s, )
+            return (None, )
         s = samples.copy()
         shape = s['samples'].shape
         size = tuple(int(round(dim * factor)) for dim in shape[-2:])
@@ -9171,6 +9172,9 @@ class WAS_KSampler_Cycle:
                     "steps_scaling_value": ("INT", {"default": 10, "min": 1, "max": 20, "step": 1}),
                     "steps_cutoff": ("INT", {"default": 20, "min": 4, "max": 1000, "step": 1}),
                     "denoise_cutoff": ("FLOAT", {"default": 0.25, "min": 0.01, "max": 1.0, "step": 0.01}),
+                },
+                "hidden": {
+                    "context": "EXECUTION_CONTEXT"
                 }
             }
 
@@ -9185,7 +9189,7 @@ class WAS_KSampler_Cycle:
                 pos_additive=None, pos_add_mode=None, pos_add_strength=None, pos_add_strength_scaling=None, pos_add_strength_cutoff=None,
                 neg_additive=None, neg_add_mode=None, neg_add_strength=None, neg_add_strength_scaling=None, neg_add_strength_cutoff=None,
                 upscale_model=None, processor_model=None, sharpen_strength=0, sharpen_radius=2, steps_scaling=None, steps_control=None,
-                steps_scaling_value=None, steps_cutoff=None, denoise_cutoff=0.25):
+                steps_scaling_value=None, steps_cutoff=None, denoise_cutoff=0.25, context: execution_context.ExecutionContext=None):
 
         upscale_steps = upscale_cycles
         division_factor = upscale_steps if steps >= upscale_steps else steps
@@ -9311,7 +9315,7 @@ class WAS_KSampler_Cycle:
             if i != 0:
                 latent_image = latent_image_result
 
-            samples = nodes.common_ksampler(
+            samples = nodes.common_ksampler(context,
                 run_model,
                 seed,
                 steps,
@@ -13577,35 +13581,37 @@ class WAS_Debug_Number_to_Console:
 
 class WAS_Checkpoint_Loader:
     @classmethod
-    def INPUT_TYPES(s):
-        return {"required": { "config_name": (comfy_paths.get_filename_list("configs"), ),
-                              "ckpt_name": (comfy_paths.get_filename_list("checkpoints"), )}}
+    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
+        return {"required": { "config_name": (comfy_paths.get_filename_list(context, "configs"), ),
+                              "ckpt_name": (comfy_paths.get_filename_list(context, "checkpoints"), )},
+                "hidden": { "context": "EXECUTION_CONTEXT",}}
     RETURN_TYPES = ("MODEL", "CLIP", "VAE", TEXT_TYPE)
     RETURN_NAMES = ("MODEL", "CLIP", "VAE", "NAME_STRING")
     FUNCTION = "load_checkpoint"
 
     CATEGORY = "WAS Suite/Loaders/Advanced"
 
-    def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True):
-        config_path = comfy_paths.get_full_path("configs", config_name)
-        ckpt_path = comfy_paths.get_full_path("checkpoints", ckpt_name)
+    def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        config_path = comfy_paths.get_full_path(context, "configs", config_name)
+        ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
         out = comfy.sd.load_checkpoint(config_path, ckpt_path, output_vae=True, output_clip=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
         return (out[0], out[1], out[2], os.path.splitext(os.path.basename(ckpt_name))[0])
 
 class WAS_Checkpoint_Loader:
     @classmethod
-    def INPUT_TYPES(s):
-        return {"required": { "config_name": (comfy_paths.get_filename_list("configs"), ),
-                              "ckpt_name": (comfy_paths.get_filename_list("checkpoints"), )}}
+    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
+        return {"required": { "config_name": (comfy_paths.get_filename_list(context, "configs"), ),
+                              "ckpt_name": (comfy_paths.get_filename_list(context, "checkpoints"), )},
+                "hidden": { "context": "EXECUTION_CONTEXT",}}
     RETURN_TYPES = ("MODEL", "CLIP", "VAE", TEXT_TYPE)
     RETURN_NAMES = ("MODEL", "CLIP", "VAE", "NAME_STRING")
     FUNCTION = "load_checkpoint"
 
     CATEGORY = "WAS Suite/Loaders/Advanced"
 
-    def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True):
-        config_path = comfy_paths.get_full_path("configs", config_name)
-        ckpt_path = comfy_paths.get_full_path("checkpoints", ckpt_name)
+    def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        config_path = comfy_paths.get_full_path(context, "configs", config_name)
+        ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
         out = comfy.sd.load_checkpoint(config_path, ckpt_path, output_vae=True, output_clip=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
         return (out[0], out[1], out[2], os.path.splitext(os.path.basename(ckpt_name))[0])
 
@@ -13640,17 +13646,19 @@ class WAS_Diffusers_Hub_Model_Loader:
 
 class WAS_Checkpoint_Loader_Simple:
     @classmethod
-    def INPUT_TYPES(s):
-        return {"required": { "ckpt_name": (comfy_paths.get_filename_list("checkpoints"), ),
-                             }}
+    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
+        return {"required": { "ckpt_name": (comfy_paths.get_filename_list(context, "checkpoints"), ),
+                             },
+                "hidden": { "context": "EXECUTION_CONTEXT",
+                            }}
     RETURN_TYPES = ("MODEL", "CLIP", "VAE", TEXT_TYPE)
     RETURN_NAMES = ("MODEL", "CLIP", "VAE", "NAME_STRING")
     FUNCTION = "load_checkpoint"
 
     CATEGORY = "WAS Suite/Loaders"
 
-    def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True):
-        ckpt_path = comfy_paths.get_full_path("checkpoints", ckpt_name)
+    def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
         out = comfy.sd.load_checkpoint_guess_config(ckpt_path, output_vae=True, output_clip=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
         return (out[0], out[1], out[2], os.path.splitext(os.path.basename(ckpt_name))[0])
 
@@ -13682,17 +13690,18 @@ class WAS_Diffusers_Loader:
 
 class WAS_unCLIP_Checkpoint_Loader:
     @classmethod
-    def INPUT_TYPES(s):
-        return {"required": { "ckpt_name": (comfy_paths.get_filename_list("checkpoints"), ),
-                             }}
+    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
+        return {"required": { "ckpt_name": (comfy_paths.get_filename_list(context, "checkpoints"), ),
+                             },
+                "hidden": { "context": "EXECUTION_CONTEXT",}}
     RETURN_TYPES = ("MODEL", "CLIP", "VAE", "CLIP_VISION", "STRING")
     RETURN_NAMES = ("MODEL", "CLIP", "VAE", "CLIP_VISION", "NAME_STRING")
     FUNCTION = "load_checkpoint"
 
     CATEGORY = "WAS Suite/Loaders"
 
-    def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True):
-        ckpt_path = comfy_paths.get_full_path("checkpoints", ckpt_name)
+    def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
         out = comfy.sd.load_checkpoint_guess_config(ckpt_path, output_vae=True, output_clip=True, output_clipvision=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
         return (out[0], out[1], out[2], out[3], os.path.splitext(os.path.basename(ckpt_name))[0])
 
@@ -13729,26 +13738,27 @@ class WAS_Lora_Loader:
         self.loaded_lora = None;
 
     @classmethod
-    def INPUT_TYPES(s):
-        file_list = comfy_paths.get_filename_list("loras")
+    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
+        file_list = comfy_paths.get_filename_list(context, "loras")
         file_list.insert(0, "None")
         return {"required": { "model": ("MODEL",),
                               "clip": ("CLIP", ),
                               "lora_name": (file_list, ),
                               "strength_model": ("FLOAT", {"default": 1.0, "min": -10.0, "max": 10.0, "step": 0.01}),
                               "strength_clip": ("FLOAT", {"default": 1.0, "min": -10.0, "max": 10.0, "step": 0.01}),
-                              }}
+                              },
+                "hidden": { "context": "EXECUTION_CONTEXT",}}
     RETURN_TYPES = ("MODEL", "CLIP", TEXT_TYPE)
     RETURN_NAMES = ("MODEL", "CLIP", "NAME_STRING")
     FUNCTION = "load_lora"
 
     CATEGORY = "WAS Suite/Loaders"
 
-    def load_lora(self, model, clip, lora_name, strength_model, strength_clip):
+    def load_lora(self, model, clip, lora_name, strength_model, strength_clip, context: execution_context.ExecutionContext = None):
         if strength_model == 0 and strength_clip == 0:
             return (model, clip)
 
-        lora_path = comfy_paths.get_full_path("loras", lora_name)
+        lora_path = comfy_paths.get_full_path(context, "loras", lora_name)
         lora = None
         if self.loaded_lora is not None:
             if self.loaded_lora[0] == lora_path:
@@ -13767,17 +13777,18 @@ class WAS_Lora_Loader:
 
 class WAS_Upscale_Model_Loader:
     @classmethod
-    def INPUT_TYPES(s):
-        return {"required": { "model_name": (comfy_paths.get_filename_list("upscale_models"), ),
-                             }}
+    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
+        return {"required": { "model_name": (comfy_paths.get_filename_list(context, "upscale_models"), ),
+                             },
+                "hidden": { "context": "EXECUTION_CONTEXT",}}
     RETURN_TYPES = ("UPSCALE_MODEL",TEXT_TYPE)
     RETURN_NAMES = ("UPSCALE_MODEL","MODEL_NAME_TEXT")
     FUNCTION = "load_model"
 
     CATEGORY = "WAS Suite/Loaders"
 
-    def load_model(self, model_name):
-        model_path = comfy_paths.get_full_path("upscale_models", model_name)
+    def load_model(self, model_name, context: execution_context.ExecutionContext):
+        model_path = comfy_paths.get_full_path(context, "upscale_models", model_name)
         sd = comfy.utils.load_torch_file(model_path)
         out = model_loading.load_state_dict(sd).eval()
         return (out,model_name)
