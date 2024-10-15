@@ -1,1 +1,20 @@
-# There are no default requirements. See CONFIG.md for more information
+cmake
+fairscale>=0.4.4
+git+https://github.com/WASasquatch/img2texture.git
+git+https://github.com/WASasquatch/cstr
+gitpython
+imageio
+joblib
+matplotlib
+numba
+numpy
+opencv-python-headless[ffmpeg]
+pilgram
+git+https://github.com/WASasquatch/ffmpy.git
+rembg
+scikit-image>=0.21.0
+scikit-learn
+scipy
+timm>=0.4.12
+tqdm
+transformers>=4.38.1
