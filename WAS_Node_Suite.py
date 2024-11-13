@@ -13591,23 +13591,10 @@ class WAS_Checkpoint_Loader:
 
     CATEGORY = "WAS Suite/Loaders/Advanced"
 
-    def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
-        config_path = comfy_paths.get_full_path(context, "configs", config_name)
-        ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
-        out = comfy.sd.load_checkpoint(config_path, ckpt_path, output_vae=True, output_clip=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
-        return (out[0], out[1], out[2], os.path.splitext(os.path.basename(ckpt_name))[0])
-
-class WAS_Checkpoint_Loader:
     @classmethod
-    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
-        return {"required": { "config_name": (comfy_paths.get_filename_list(context, "configs"), ),
-                              "ckpt_name": (comfy_paths.get_filename_list(context, "checkpoints"), )},
-                "hidden": { "context": "EXECUTION_CONTEXT",}}
-    RETURN_TYPES = ("MODEL", "CLIP", "VAE", TEXT_TYPE)
-    RETURN_NAMES = ("MODEL", "CLIP", "VAE", "NAME_STRING")
-    FUNCTION = "load_checkpoint"
-
-    CATEGORY = "WAS Suite/Loaders/Advanced"
+    def VALIDATE_INPUTS(cls, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        context.validate_model("checkpoints", ckpt_name)
+        return True
 
     def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
         config_path = comfy_paths.get_full_path(context, "configs", config_name)
@@ -13657,6 +13644,11 @@ class WAS_Checkpoint_Loader_Simple:
 
     CATEGORY = "WAS Suite/Loaders"
 
+    @classmethod
+    def VALIDATE_INPUTS(cls, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        context.validate_model("checkpoints", ckpt_name)
+        return True
+
     def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
         ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
         out = comfy.sd.load_checkpoint_guess_config(ckpt_path, output_vae=True, output_clip=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
@@ -13699,6 +13691,11 @@ class WAS_unCLIP_Checkpoint_Loader:
     FUNCTION = "load_checkpoint"
 
     CATEGORY = "WAS Suite/Loaders"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        context.validate_model("checkpoints", ckpt_name)
+        return True
 
     def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
         ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
@@ -13753,6 +13750,11 @@ class WAS_Lora_Loader:
     FUNCTION = "load_lora"
 
     CATEGORY = "WAS Suite/Loaders"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, model, clip, lora_name, strength_model, strength_clip, context: execution_context.ExecutionContext = None):
+        context.validate_model("loras", lora_name)
+        return True
 
     def load_lora(self, model, clip, lora_name, strength_model, strength_clip, context: execution_context.ExecutionContext = None):
         if strength_model == 0 and strength_clip == 0:
