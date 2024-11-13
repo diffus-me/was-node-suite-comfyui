@@ -7331,10 +7331,10 @@ class WAS_Image_Save:
     CATEGORY = "WAS Suite/IO"
 
     def was_save_images(self, images, output_path='', filename_prefix="ComfyUI", filename_delimiter='_',
-                        extension='png', dpi=96, quality=100, optimize_image="true", lossless_webp="false", prompt=None, extra_pnginfo=None, user_hash='',
+                        extension='png', dpi=96, quality=100, optimize_image="true", lossless_webp="false", prompt=None, extra_pnginfo=None,
                         overwrite_mode='false', filename_number_padding=4, filename_number_start='false',
                         show_history='false', show_history_by_prefix="true", embed_workflow="true",
-                        show_previews="true"):
+                        show_previews="true", user_hash=''):
 
         delimiter = filename_delimiter
         number_padding = filename_number_padding
@@ -7468,7 +7468,8 @@ class WAS_Image_Save:
                     results.append({
                         "filename": file,
                         "subfolder": subfolder,
-                        "type": self.type
+                        "type": self.type,
+                        "user_hash": user_hash,
                     })
 
                 # Update the output image history
@@ -7517,7 +7518,8 @@ class WAS_Image_Save:
                 image_data = {
                     "filename": os.path.basename(image_path),
                     "subfolder": subfolder,
-                    "type": self.type
+                    "type": self.type,
+                    "user_hash": user_hash
                 }
                 results.append(image_data)
 
@@ -9272,15 +9274,19 @@ class WAS_KSampler:
                  "negative": ("CONDITIONING", ),
                  "latent_image": ("LATENT", ),
                  "denoise": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 1.0, "step": 0.01}),
-                 }}
+                 },
+                "hidden": {
+                    "context": "EXECUTION_CONTEXT",
+                }
+                }
 
     RETURN_TYPES = ("LATENT",)
     FUNCTION = "sample"
 
     CATEGORY = "WAS Suite/Sampling"
 
-    def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=1.0):
-        return nodes.common_ksampler(model, seed['seed'], steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise)
+    def sample(self, model, seed, steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=1.0, context: execution_context.ExecutionContext=None):
+        return nodes.common_ksampler(model, seed['seed'], steps, cfg, sampler_name, scheduler, positive, negative, latent_image, denoise=denoise, context=context)
 
 # KSampler Cycle
 
@@ -13756,23 +13762,10 @@ class WAS_Checkpoint_Loader:
 
     CATEGORY = "WAS Suite/Loaders/Advanced"
 
-    def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
-        config_path = comfy_paths.get_full_path(context, "configs", config_name)
-        ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
-        out = comfy.sd.load_checkpoint(config_path, ckpt_path, output_vae=True, output_clip=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
-        return (out[0], out[1], out[2], os.path.splitext(os.path.basename(ckpt_name))[0])
-
-class WAS_Checkpoint_Loader:
     @classmethod
-    def INPUT_TYPES(s, context: execution_context.ExecutionContext):
-        return {"required": { "config_name": (comfy_paths.get_filename_list(context, "configs"), ),
-                              "ckpt_name": (comfy_paths.get_filename_list(context, "checkpoints"), )},
-                "hidden": { "context": "EXECUTION_CONTEXT",}}
-    RETURN_TYPES = ("MODEL", "CLIP", "VAE", TEXT_TYPE)
-    RETURN_NAMES = ("MODEL", "CLIP", "VAE", "NAME_STRING")
-    FUNCTION = "load_checkpoint"
-
-    CATEGORY = "WAS Suite/Loaders/Advanced"
+    def VALIDATE_INPUTS(cls, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        context.validate_model("checkpoints", ckpt_name)
+        return True
 
     def load_checkpoint(self, config_name, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
         config_path = comfy_paths.get_full_path(context, "configs", config_name)
@@ -13822,6 +13815,11 @@ class WAS_Checkpoint_Loader_Simple:
 
     CATEGORY = "WAS Suite/Loaders"
 
+    @classmethod
+    def VALIDATE_INPUTS(cls, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        context.validate_model("checkpoints", ckpt_name)
+        return True
+
     def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
         ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
         out = comfy.sd.load_checkpoint_guess_config(ckpt_path, output_vae=True, output_clip=True, embedding_directory=comfy_paths.get_folder_paths("embeddings"))
@@ -13864,6 +13862,11 @@ class WAS_unCLIP_Checkpoint_Loader:
     FUNCTION = "load_checkpoint"
 
     CATEGORY = "WAS Suite/Loaders"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
+        context.validate_model("checkpoints", ckpt_name)
+        return True
 
     def load_checkpoint(self, ckpt_name, output_vae=True, output_clip=True, context: execution_context.ExecutionContext = None):
         ckpt_path = comfy_paths.get_full_path(context, "checkpoints", ckpt_name)
@@ -13918,6 +13921,11 @@ class WAS_Lora_Loader:
     FUNCTION = "load_lora"
 
     CATEGORY = "WAS Suite/Loaders"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, model, clip, lora_name, strength_model, strength_clip, context: execution_context.ExecutionContext = None):
+        context.validate_model("loras", lora_name)
+        return True
 
     def load_lora(self, model, clip, lora_name, strength_model, strength_clip, context: execution_context.ExecutionContext = None):
         if strength_model == 0 and strength_clip == 0:
