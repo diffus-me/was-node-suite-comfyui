@@ -26,6 +26,7 @@ import comfy.utils
 import comfy.clip_vision
 import comfy.model_management
 import execution_context
+import folder_paths
 import folder_paths as comfy_paths
 from comfy_extras.chainner_models import model_loading
 import ast
@@ -11542,10 +11543,10 @@ class WAS_CLIPSeg_Model_Loader:
     def clipseg_model(self, model):
         from transformers import CLIPSegProcessor, CLIPSegForImageSegmentation
 
-        cache = os.path.join(MODELS_DIR, 'clipseg')
-
-        inputs = CLIPSegProcessor.from_pretrained(model, cache_dir=cache)
-        model = CLIPSegForImageSegmentation.from_pretrained(model, cache_dir=cache)
+        base_path = folder_paths.get_folder_paths("clipseg")
+        model_path = os.path.join(base_path[0], "clipseg-rd64-refined")
+        inputs = CLIPSegProcessor.from_pretrained(model_path)
+        model = CLIPSegForImageSegmentation.from_pretrained(model_path)
 
         return ( (inputs, model), )
 
@@ -11584,8 +11585,10 @@ class WAS_CLIPSeg:
             inputs = clipseg_model[0]
             model = clipseg_model[1]
         else:
-            inputs = CLIPSegProcessor.from_pretrained("CIDAS/clipseg-rd64-refined", cache_dir=cache)
-            model = CLIPSegForImageSegmentation.from_pretrained("CIDAS/clipseg-rd64-refined", cache_dir=cache)
+            base_path = folder_paths.get_folder_paths("clipseg")
+            model_path = os.path.join(base_path[0], "clipseg-rd64-refined")
+            inputs = CLIPSegProcessor.from_pretrained(model_path)
+            model = CLIPSegForImageSegmentation.from_pretrained(model_path)
 
         if B == 1:
             image = tensor2pil(image)
@@ -11671,8 +11674,10 @@ class CLIPSeg2:
             processor = clipseg_model[0]
             model = clipseg_model[1]
         else:
-            processor = CLIPSegProcessor.from_pretrained("CIDAS/clipseg-rd64-refined")
-            model = CLIPSegForImageSegmentation.from_pretrained("CIDAS/clipseg-rd64-refined")
+            base_path = folder_paths.get_folder_paths("clipseg")
+            model_path = os.path.join(base_path[0], "clipseg-rd64-refined")
+            processor = CLIPSegProcessor.from_pretrained(model_path)
+            model = CLIPSegForImageSegmentation.from_pretrained(model_path)
         # Move model to CUDA if requested
         if use_cuda and torch.cuda.is_available():
             model = model.to('cuda')
@@ -11848,10 +11853,11 @@ class WAS_CLIPSeg_Batch:
         if text_f:
             prompts.append(text_f)
 
-        cache = os.path.join(MODELS_DIR, 'clipseg')
 
-        inputs = CLIPSegProcessor.from_pretrained("CIDAS/clipseg-rd64-refined", cache_dir=cache)
-        model = CLIPSegForImageSegmentation.from_pretrained("CIDAS/clipseg-rd64-refined", cache_dir=cache)
+        base_path = folder_paths.get_folder_paths("clipseg")
+        model_path = os.path.join(base_path[0], "clipseg-rd64-refined")
+        inputs = CLIPSegProcessor.from_pretrained(model_path)
+        model = CLIPSegForImageSegmentation.from_pretrained(model_path)
 
         with torch.no_grad():
             result = model(**inputs(text=prompts, images=images_pil, padding=True, return_tensors="pt"))
