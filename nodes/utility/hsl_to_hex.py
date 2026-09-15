@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 
+import execution_context
 from comfy_api.latest import io
 
 #: ``hsl(0, 100%, 50%)`` and ``hsla(0, 100%, 50%, 0.5)``. Percent signs are optional and
@@ -19,7 +20,7 @@ class HSLToHex(io.ComfyNode):
     """
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="HSL to Hex",
             display_name="HSL to Hex",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.archive import container, picks, summary
@@ -34,7 +35,7 @@ class ZipOpen(io.ComfyNode):
     """Open an archive and list its entries, the ``archive`` output carrying an index of them."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASZipOpen",
             display_name="Open ZIP",

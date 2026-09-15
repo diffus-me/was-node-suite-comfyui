@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 from collections.abc import Mapping
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import DICT, LIST
@@ -42,7 +43,7 @@ class DictionaryNew(io.ComfyNode):
     # Dictionary draws from.
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Dictionary New",
             display_name="Text Dictionary New",

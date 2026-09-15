@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules import log
@@ -26,7 +27,7 @@ class WidgetToString(io.ComfyNode):
     """Read a named widget on another node of the graph and answer its value as a string."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASWidgetToString",
             display_name="Widget to String",

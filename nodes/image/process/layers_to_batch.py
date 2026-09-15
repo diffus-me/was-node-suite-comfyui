@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.lists import require_values
@@ -24,7 +25,7 @@ class LayersToImageBatch(io.ComfyNode):
     """Split a ``LAYERS`` document into one frame per layer, with its placement beside it."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLayersToImageBatch",
             display_name="Layers to Image Batch",

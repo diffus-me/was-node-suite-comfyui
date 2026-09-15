@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.image import dynamic
@@ -13,7 +14,7 @@ class ImageBlendByMask(io.ComfyNode):
     """Composite two images using a third as the blend factor."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Blend by Mask",
             display_name="Image Blend by Mask",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.logic.compare import CONDITION_NAMES, REDUCTIONS, reduce_booleans, to_boolean
@@ -17,7 +18,7 @@ class BooleanReduce(io.ComfyNode):
     """Combine any number of booleans into one."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASBooleanReduce",
             display_name="Boolean Reduce",

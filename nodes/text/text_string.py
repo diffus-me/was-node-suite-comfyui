@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -14,7 +15,7 @@ class TextString(io.ComfyNode):
     """Emit up to four single-line strings, each with tokens substituted."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text String",
             display_name="Text String",

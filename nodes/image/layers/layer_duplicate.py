@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules.compat import limits
@@ -15,7 +16,7 @@ class LayerDuplicate(io.ComfyNode):
     """Add a copy of one layer to a ``LAYERS`` document."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLayerDuplicate",
             display_name="Layer Duplicate",

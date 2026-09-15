@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import log
@@ -111,7 +112,7 @@ class TextLoadLineFromFile(io.ComfyNode):
     # so a short list lives in the workflow rather than in a file beside it.
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Load Line From File",
             display_name="Text Load Line From File",

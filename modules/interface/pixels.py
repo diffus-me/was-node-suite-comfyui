@@ -131,11 +131,11 @@ def apply(node_cls, node_id=None) -> None:
 def _wrap(node_cls, node_id) -> None:
     """Do the wrapping. Split out so :func:`apply` owns the one guard around all of it."""
     if node_id is None:
-        node_id = node_cls.GET_SCHEMA().node_id
+        node_id = node_cls.GET_SCHEMA(exec_context=None).node_id
     if node_id not in FAMILY:
         return
     setattr(node_cls, MARKER, True)
-    schema = node_cls.GET_SCHEMA()
+    schema = node_cls.GET_SCHEMA(exec_context=None)
     before, controls = sides(schema)
     if not before:
         logger.debug("%s declares no IMAGE input, so neither side is filed", node_id)

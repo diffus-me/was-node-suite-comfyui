@@ -2,23 +2,24 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 REQUIRES = "loaders"
 
 
-def upscale_model_names() -> list[str]:
+def upscale_model_names(exec_context: execution_context.ExecutionContext) -> list[str]:
     """The upscale models this install offers."""
     import folder_paths
 
-    return folder_paths.get_filename_list("upscale_models")
+    return folder_paths.get_filename_list(exec_context, "upscale_models")
 
 
 class UpscaleModelLoader(io.ComfyNode):
     """Load an ESRGAN-family upscale model and report the file name it came from."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Upscale Model Loader",
             display_name="Upscale Model Loader (Advanced)",
@@ -32,7 +33,7 @@ class UpscaleModelLoader(io.ComfyNode):
             inputs=[
                 io.Combo.Input(
                     "model_name",
-                    options=upscale_model_names(),
+                    options=upscale_model_names(exec_context=exec_context),
                     tooltip=(
                         "The upscale model in models/upscale_models to load. Its own scale "
                         "factor, usually 2x or 4x, decides how much larger the result is."

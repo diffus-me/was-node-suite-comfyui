@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from . import mask_planes, stack_masks
@@ -14,7 +16,7 @@ class MaskGuidedFilter(io.ComfyNode):
     """Refine a mask against an image, so its edge lands where the picture's edge is."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASMaskGuidedFilter",
             display_name="Mask Guided Filter",

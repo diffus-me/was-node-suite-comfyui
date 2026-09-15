@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import config, log
@@ -46,7 +47,7 @@ class LoadCache(io.ComfyNode):
     """Read back what `Cache Node` wrote."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Load Cache",
             display_name="Load Cache",

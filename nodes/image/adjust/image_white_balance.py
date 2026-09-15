@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import dynamic, white_balance
@@ -16,7 +17,7 @@ class ImageWhiteBalance(io.ComfyNode):
     """Estimate the colour of the light in each frame and divide it back out."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageWhiteBalance",
             display_name="Image White Balance",

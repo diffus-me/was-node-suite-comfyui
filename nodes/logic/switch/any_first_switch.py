@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.logic.switch_index import SLOT_NAMES
@@ -18,7 +19,7 @@ class AnyFirstSwitch(io.ComfyNode):
     """Pass the first connected input on, whatever type it is."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         match = io.MatchType.Template("any_first_switch")
         return io.Schema(
             node_id="WASAnyFirstSwitch",

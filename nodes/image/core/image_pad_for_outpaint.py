@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat import limits
@@ -49,7 +50,7 @@ class ImagePadForOutpaint(io.ComfyNode):
     """Place a picture on a bigger canvas and mark the new room for a sampler."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImagePadForOutpaint",
             display_name="Image Pad for Outpaint",

@@ -5,6 +5,8 @@ from __future__ import annotations
 import math
 
 import torch
+
+import execution_context
 from comfy_api.latest import io, ui
 
 
@@ -109,7 +111,7 @@ class AudioMetadata(io.ComfyNode):
     """Split an AUDIO's length, shape and level into the numbers a graph wires."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASAudioMetadata",
             display_name="Audio Metadata",

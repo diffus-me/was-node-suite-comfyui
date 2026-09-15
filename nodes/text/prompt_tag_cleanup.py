@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat.types import LIST
@@ -12,7 +13,7 @@ class PromptTagCleanup(io.ComfyNode):
     """Split a prompt into tags, remove duplicates and empties, and rejoin it."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASPromptTagCleanup",
             display_name="Prompt Tag Cleanup",

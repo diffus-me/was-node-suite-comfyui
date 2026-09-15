@@ -176,7 +176,7 @@ def apply(node_cls) -> None:
 
 def _wrap(node_cls) -> None:
     """Do the wrapping. Split out so :func:`apply` owns the one guard around all of it."""
-    names = text_inputs(node_cls.GET_SCHEMA())
+    names = text_inputs(node_cls.GET_SCHEMA(exec_context=None))
     setattr(node_cls, MARKER, True)
     if not names:
         return

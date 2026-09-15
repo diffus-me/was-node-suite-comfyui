@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pprint import pformat
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat.types import DICT
@@ -16,7 +17,7 @@ class DictionaryToConsole(io.ComfyNode):
     """Log a dictionary under a user-supplied heading and return it unchanged."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Dictionary to Console",
             display_name="Dictionary to Console",

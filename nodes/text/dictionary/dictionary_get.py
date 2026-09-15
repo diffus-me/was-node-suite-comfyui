@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -12,7 +13,7 @@ class DictionaryGet(io.ComfyNode):
     """Look a key up in a dictionary and emit its value as text."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Dictionary Get",
             display_name="Text Dictionary Get",

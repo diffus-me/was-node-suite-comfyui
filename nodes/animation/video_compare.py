@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.media.temp_video import to_temp
@@ -15,7 +16,7 @@ class VideoCompare(io.ComfyNode):
     """Play two videos on one node, split by a divider that drags across."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASVideoCompare",
             display_name="Compare Video",

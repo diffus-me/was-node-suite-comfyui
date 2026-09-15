@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.log import get_logger
@@ -18,7 +19,7 @@ class DebugInput(io.ComfyNode):
     """Show what is actually travelling down a wire."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="DebugInput",
             display_name="Debug Input",

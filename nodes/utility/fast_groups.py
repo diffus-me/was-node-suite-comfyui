@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -9,7 +10,7 @@ class FastGroups(io.ComfyNode):
     """A panel of the graph's groups, each switching the nodes inside it."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASFastGroups",
             display_name="Fast Groups",

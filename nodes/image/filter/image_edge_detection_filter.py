@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import filtered_planes
@@ -15,7 +16,7 @@ class ImageEdgeDetectionFilter(io.ComfyNode):
     """Reduce an image to the outlines of whatever it contains."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Edge Detection Filter",
             display_name="Image Edge Detection Filter",

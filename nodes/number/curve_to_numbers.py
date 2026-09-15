@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat.types import LIST, NUMBER
@@ -14,7 +15,7 @@ class CurveToNumbers(io.ComfyNode):
     """Read a curve as numbers, walking a range by a fixed step."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASCurveToNumbers",
             display_name="Curve to Numbers",

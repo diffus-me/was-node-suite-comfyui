@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import THREE_GEOMETRY, THREE_MATERIAL, THREE_OBJECT
@@ -14,7 +15,7 @@ class ThreeMesh(io.ComfyNode):
     """Pair a geometry with a material."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeMesh",
             display_name="Three Mesh",

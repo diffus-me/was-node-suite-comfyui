@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import random
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import filtered_planes
@@ -62,7 +63,7 @@ class ImageFilmGrain(io.ComfyNode):
     """Blend randomly speckled photographic grain into an image."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Film Grain",
             display_name="Image Film Grain",

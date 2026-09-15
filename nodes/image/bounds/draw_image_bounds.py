@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import IMAGE_BOUNDS
@@ -14,7 +15,7 @@ class DrawImageBounds(io.ComfyNode):
     """Draw an ``IMAGE_BOUNDS`` value as rectangles over the image, and as a mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASDrawImageBounds",
             display_name="Draw Image Bounds",

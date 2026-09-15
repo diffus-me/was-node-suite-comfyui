@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import NUMBER
@@ -18,7 +19,7 @@ class AnyIndexSwitch(io.ComfyNode):
     """Select one of a list of inputs of any type by its number."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         match = io.MatchType.Template("any_index_switch")
         return io.Schema(
             node_id="WASAnyIndexSwitch",

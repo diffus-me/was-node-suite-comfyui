@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.sampling.conditioning import (
@@ -69,7 +70,7 @@ class CLIPTextEncodeSequence2(io.ComfyNode):
     """Encode a list of prompts and schedule when each one takes over."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="CLIPTextEncodeSequence2",
             display_name="CLIP Text Encode Sequence (v2)",

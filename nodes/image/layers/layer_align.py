@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules.compat import limits
@@ -21,7 +22,7 @@ class LayerAlign(io.ComfyNode):
     """Place layers of a ``LAYERS`` document at an anchor rather than by coordinate."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLayerAlign",
             display_name="Layer Align",

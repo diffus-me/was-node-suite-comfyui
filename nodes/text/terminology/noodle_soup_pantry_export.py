@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -23,7 +24,7 @@ class NoodleSoupPantryExport(io.ComfyNode):
     """Write the stored terminology out as a pantry JSON file."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASNoodleSoupPantryExport",
             display_name="Noodle Soup Pantry Export",

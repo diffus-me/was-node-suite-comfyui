@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -16,7 +17,7 @@ class TextSplitToList(io.ComfyNode):
     """Split a string into a ``LIST`` and into a ``STRING`` list."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASTextSplitToList",
             display_name="Text Split to List",

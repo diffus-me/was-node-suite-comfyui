@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules import log
@@ -15,7 +16,7 @@ class TextParseNoodleSoupPrompts(io.ComfyNode):
     """Replace each ``__term__`` in ``text`` with a random entry drawn for that term."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Parse Noodle Soup Prompts",
             display_name="Text Parse Noodle Soup Prompts",

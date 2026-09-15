@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -110,7 +111,7 @@ class ImageAmbientOcclusion(io.ComfyNode):
     """Darken the crevices of an image using the depth map that goes with it."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image SSAO (Ambient Occlusion)",
             display_name="Image SSAO (Ambient Occlusion)",

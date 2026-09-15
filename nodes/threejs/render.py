@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import THREE_APP
@@ -15,7 +16,7 @@ class ThreeRender(io.ComfyNode):
     """Render a scene in the browser and answer the frame."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeRender",
             display_name="Three Render",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import deps
@@ -16,7 +17,7 @@ class SamplesPassthroughStatSystem(io.ComfyNode):
     """Report system resource usage and return the latent unchanged."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Samples Passthrough (Stat System)",
             display_name="Samples Passthrough (Stat System)",

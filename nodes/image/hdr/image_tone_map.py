@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -21,7 +22,7 @@ class ImageToneMap(io.ComfyNode):
     """Map linear light into 0 to 1 through a tone curve."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageToneMap",
             display_name="Image Tone Map",

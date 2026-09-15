@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 
@@ -9,7 +10,7 @@ class TextToConditioning(io.ComfyNode):
     """Encode ``text`` with ``clip`` and emit the conditioning."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text to Conditioning",
             display_name="Text to Conditioning",

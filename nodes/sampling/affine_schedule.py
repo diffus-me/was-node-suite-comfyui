@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import DICT
@@ -76,7 +78,7 @@ class AffineSchedule(io.ComfyNode):
     """Shape the per-step strength curve the Affine samplers follow."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASAffineSchedule",
             display_name="Affine Schedule",

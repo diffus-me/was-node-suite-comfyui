@@ -4,30 +4,31 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io
 
 REQUIRES = "loaders"
 
 
-def config_names() -> list[str]:
+def config_names(exec_context: execution_context.ExecutionContext) -> list[str]:
     """The model config files this install offers."""
     import folder_paths
 
-    return folder_paths.get_filename_list("configs")
+    return folder_paths.get_filename_list(exec_context, "configs")
 
 
-def checkpoint_names() -> list[str]:
+def checkpoint_names(exec_context: execution_context.ExecutionContext) -> list[str]:
     """The checkpoints this install offers. Read live, as in :func:`config_names`."""
     import folder_paths
 
-    return folder_paths.get_filename_list("checkpoints")
+    return folder_paths.get_filename_list(exec_context, "checkpoints")
 
 
 class CheckpointLoader(io.ComfyNode):
     """Load a checkpoint described by a model config file, and report its name."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Checkpoint Loader",
             display_name="Checkpoint Loader (Advanced)",
@@ -43,7 +44,7 @@ class CheckpointLoader(io.ComfyNode):
             inputs=[
                 io.Combo.Input(
                     "config_name",
-                    options=config_names(),
+                    options=config_names(exec_context),
                     tooltip=(
                         "The .yaml config in models/configs that describes the checkpoint's "
                         "architecture. Only original Stable Diffusion 1.x and 2.x weights "
@@ -53,7 +54,7 @@ class CheckpointLoader(io.ComfyNode):
                 ),
                 io.Combo.Input(
                     "ckpt_name",
-                    options=checkpoint_names(),
+                    options=checkpoint_names(exec_context),
                     tooltip="The checkpoint file in models/checkpoints to load.",
                 ),
             ],

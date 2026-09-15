@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -135,7 +136,7 @@ class ImageDirectOcclusion(io.ComfyNode):
     """Relight an image from its own brightest area, casting shadows out of its depth map."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image SSDO (Direct Occlusion)",
             display_name="Image SSDO (Direct Occlusion)",

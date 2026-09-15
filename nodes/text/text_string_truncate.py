@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -13,7 +14,7 @@ class TextStringTruncate(io.ComfyNode):
     """Cut each connected string down to ``truncate_to`` characters or words."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text String Truncate",
             display_name="Text String Truncate",

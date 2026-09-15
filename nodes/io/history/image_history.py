@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import time
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -91,7 +92,7 @@ class ImageHistoryLoader(io.ComfyNode):
     """Load one of the images this pack has read or written before."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image History Loader",
             display_name="Image History Loader",

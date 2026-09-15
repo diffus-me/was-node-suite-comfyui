@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.archive import container, extract
@@ -22,7 +23,7 @@ class ZipExtract(io.ComfyNode):
     """Unpack the entries a ZIP holds into a folder, and answer where they landed."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASZipExtract",
             display_name="Zip Extract",

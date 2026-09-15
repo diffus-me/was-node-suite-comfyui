@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import THREE_EFFECT
@@ -23,7 +24,7 @@ class ThreeBloom(io.ComfyNode):
     """Bleed light out of the brightest parts of a frame."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeBloom",
             display_name="Three Bloom",
@@ -95,7 +96,7 @@ class ThreeDepthOfField(io.ComfyNode):
     """Throw everything but one distance out of focus."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeDepthOfField",
             display_name="Three Depth Of Field",
@@ -177,7 +178,7 @@ class ThreeAntialias(io.ComfyNode):
     """Smooth the stepped edges a render leaves."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeAntialias",
             display_name="Three Antialias",

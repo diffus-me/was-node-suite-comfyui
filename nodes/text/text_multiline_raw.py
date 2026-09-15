@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -9,7 +10,7 @@ class TextMultilineRaw(io.ComfyNode):
     """A text box with dynamic prompts off and no comment stripping."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Multiline (Code Compatible)",
             display_name="Text Multiline (Code Compatible)",

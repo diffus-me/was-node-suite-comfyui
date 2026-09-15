@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat import limits
@@ -28,7 +29,7 @@ class MaskFeather(io.ComfyNode):
     """Fade each named edge of every mask in a batch to black."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASMaskFeather",
             display_name="Mask Feather",

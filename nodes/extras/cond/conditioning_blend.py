@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -114,7 +115,7 @@ class ConditioningBlend(io.ComfyNode):
     """Blend any number of conditionings into one by a choice of formulas."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="ConditioningBlend",
             display_name="Conditioning (Blend)",

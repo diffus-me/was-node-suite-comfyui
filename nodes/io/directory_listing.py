@@ -13,6 +13,7 @@ import re
 from pathlib import PureWindowsPath
 from typing import NamedTuple
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.io import picker
@@ -201,7 +202,7 @@ class DirectoryListing(io.ComfyNode):
     """List a folder as a LIST of paths, a LIST of names, one line each, and a count."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASDirectoryListing",
             display_name="Directory Listing",

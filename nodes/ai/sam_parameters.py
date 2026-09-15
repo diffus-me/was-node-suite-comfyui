@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import numpy as np
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import SAM_PARAMETERS
@@ -31,7 +33,7 @@ class SamParameters(io.ComfyNode):
     """Build the points and labels `SAM Image Mask` segments on."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="SAM Parameters",
             display_name="SAM Parameters",

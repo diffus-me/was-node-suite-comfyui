@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import NUMBER
@@ -14,7 +15,7 @@ class ImageAspectRatio(io.ComfyNode):
     """Report the aspect ratio of an image, or of an explicit width and height."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Aspect Ratio",
             display_name="Image Aspect Ratio",

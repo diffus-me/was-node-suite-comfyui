@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.interface import preview
@@ -15,7 +16,7 @@ class ImageCompare(io.ComfyNode):
     """Publish two images so the node's own interface can draw one over the other."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageCompare",
             display_name="Image Compare (Advanced)",

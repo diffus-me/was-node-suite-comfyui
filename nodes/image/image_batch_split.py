@@ -6,6 +6,7 @@ so both sides always hold at least one frame.
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat import limits
@@ -57,7 +58,7 @@ class ImageBatchSplit(io.ComfyNode):
     """Cut an image batch into the frames before a cut point and the frames from it onward."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageBatchSplit",
             display_name="Image Batch Split",

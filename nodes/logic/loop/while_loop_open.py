@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import DICT, WAS_LOOP
@@ -32,7 +33,7 @@ class WhileLoopOpen(io.ComfyNode):
     """Emit one iteration's carried values and counters."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         templates = [io.MatchType.Template(f"while_loop_value_{n}") for n in range(1, 9)]
         return io.Schema(
             node_id="WASWhileLoopOpen",

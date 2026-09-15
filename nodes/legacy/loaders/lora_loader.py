@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -51,11 +52,11 @@ NAME_OUT_TOOLTIP = (
 _loaded_lora: tuple[str, dict] | None = None
 
 
-def lora_names() -> list[str]:
+def lora_names(exec_context: execution_context.ExecutionContext) -> list[str]:
     """``"None"`` followed by the LoRA files this install offers."""
     import folder_paths
 
-    return [NONE_OPTION, *folder_paths.get_filename_list("loras")]
+    return [NONE_OPTION, *folder_paths.get_filename_list(exec_context, "loras")]
 
 
 def lora_state_dict(lora_path: str) -> dict:
@@ -82,7 +83,7 @@ class LoraLoader(io.ComfyNode):
     """Apply a LoRA to a model and a CLIP, and report the LoRA's name."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Lora Loader",
             display_name=DISPLAY_NAME,
@@ -96,7 +97,7 @@ class LoraLoader(io.ComfyNode):
             inputs=[
                 io.Model.Input("model", tooltip=MODEL_TOOLTIP),
                 io.Clip.Input("clip", tooltip=CLIP_TOOLTIP),
-                io.Combo.Input("lora_name", options=lora_names(), tooltip=LORA_NAME_TOOLTIP),
+                io.Combo.Input("lora_name", options=lora_names(exec_context), tooltip=LORA_NAME_TOOLTIP),
                 io.Float.Input(
                     "strength_model",
                     default=1.0,

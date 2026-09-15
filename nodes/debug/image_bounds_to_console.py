@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat.types import IMAGE_BOUNDS
@@ -14,7 +15,7 @@ class ImageBoundsToConsole(io.ComfyNode):
     """Log every ``(rmin, rmax, cmin, cmax)`` row on an IMAGE_BOUNDS wire."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Bounds to Console",
             display_name="Image Bounds to Console",

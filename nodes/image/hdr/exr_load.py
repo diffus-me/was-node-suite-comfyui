@@ -5,6 +5,8 @@ from __future__ import annotations
 import os
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -100,7 +102,7 @@ class EXRLoad(io.ComfyNode):
     """Read one OpenEXR file as linear light, with its coverage as a mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASEXRLoad",
             display_name="EXR Load",
@@ -153,6 +155,9 @@ class EXRLoad(io.ComfyNode):
                     ),
                 ),
             ],
+            hidden=[
+                io.Hidden.exec_context,
+            ]
         )
 
     @classmethod
@@ -164,7 +169,7 @@ class EXRLoad(io.ComfyNode):
             return float("NaN")
 
     @classmethod
-    def validate_inputs(cls, file):
+    def validate_inputs(cls, file, exec_context: execution_context.ExecutionContext):
         """Whether the chosen file is still in one of ComfyUI's own folders."""
         import folder_paths
 
@@ -172,7 +177,7 @@ class EXRLoad(io.ComfyNode):
             return (
                 "no EXR was chosen. Pick one from the file list"
             )
-        if not folder_paths.exists_annotated_filepath(file):
+        if not folder_paths.exists_annotated_filepath(file, user_hash=exec_context.user_hash):
             return (
                 f"`{file}` names no .exr that is there any more. Pick another from the "
                 f"file list"
@@ -180,7 +185,7 @@ class EXRLoad(io.ComfyNode):
         return True
 
     @classmethod
-    def execute(cls, file="") -> io.NodeOutput:
+    def execute(cls, file="", exec_context: execution_context.ExecutionContext=None) -> io.NodeOutput:
         """Read the file and answer its colour, its coverage and its peak.
 
         Raises:

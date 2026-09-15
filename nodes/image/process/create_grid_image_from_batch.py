@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import math
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import dynamic
@@ -15,7 +16,7 @@ class CreateGridImageFromBatch(io.ComfyNode):
     """Arrange every image in a batch into one grid image."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Create Grid Image from Batch",
             display_name="Create Grid Image from Batch",

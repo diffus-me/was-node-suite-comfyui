@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from . import float_mask
@@ -12,7 +13,7 @@ class MaskInvert(io.ComfyNode):
     """Swap the set and unset areas of a mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Mask Invert",
             display_name="Mask Invert",

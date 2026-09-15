@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import dynamic
@@ -13,7 +14,7 @@ class VividSharpenV2(io.ComfyNode):
     """Sharpen a whole batch at once, with the high-pass layer under manual control."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="VividSharpenV2",
             display_name="Vivid Sharpen (V2)",

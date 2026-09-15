@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import deps, log
@@ -86,7 +87,7 @@ class TrueRandomNumberGenerator(io.ComfyNode):
     """
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="True Random.org Number Generator",
             display_name="True Random.org Number Generator",

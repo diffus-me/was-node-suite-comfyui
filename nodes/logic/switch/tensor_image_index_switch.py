@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import NUMBER
@@ -18,7 +19,7 @@ class TensorImageIndexSwitch(io.ComfyNode):
     """Select one of a list of pictures by number."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         match = io.MatchType.Template("tensor_image_index_switch", [io.Image, io.Mask, io.Latent])
         return io.Schema(
             node_id="WASTensorImageIndexSwitch",

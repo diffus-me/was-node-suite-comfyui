@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import log
@@ -162,7 +163,7 @@ class WASComfyViewer(io.ComfyNode):
     """Render anything wired into it, in a sandboxed frame, and pass it on."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASComfyViewer",
             display_name="Content Viewer",

@@ -9,6 +9,7 @@ import json
 import zlib
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -145,7 +146,7 @@ class BundleLatentVAEEncode(io.ComfyNode):
     """Encode an image, and optionally store the latent in the workflow document."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="BLVAEEncode",
             display_name="VAEEncode (Bundle Latent)",

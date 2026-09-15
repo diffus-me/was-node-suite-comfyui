@@ -6,6 +6,7 @@ A bounds row is ``(rmin, rmax, cmin, cmax)`` with every edge inclusive. ``crop_d
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat import limits
@@ -21,7 +22,7 @@ class BoundsToCropData(io.ComfyNode):
     """Emit one row of an ``IMAGE_BOUNDS`` value as a ``CROP_DATA`` crop window."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASBoundsToCropData",
             display_name="Bounds to Crop Data",

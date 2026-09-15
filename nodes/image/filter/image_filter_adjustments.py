@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import pil2tensor, tensor2pil
@@ -75,7 +76,7 @@ class ImageFilterAdjustments(io.ComfyNode):
     """Apply the common tonal and softening adjustments to an image in one pass."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Filter Adjustments",
             display_name="Image Filter Adjustments",

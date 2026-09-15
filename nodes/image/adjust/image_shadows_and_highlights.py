@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import image_planes, stack_images, tensor2pil
@@ -12,7 +13,7 @@ class ImageShadowsAndHighlights(io.ComfyNode):
     """Brighten or darken the dark and bright ends of an image separately."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Shadows and Highlights",
             display_name="Image Shadows and Highlights",

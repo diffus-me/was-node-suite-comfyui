@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.io import rooted
@@ -17,7 +18,7 @@ class CreateVideoFromPath(io.ComfyNode):
     """Encode every image in a folder into a video, fading between them."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         from ...modules.media import video
 
         return io.Schema(

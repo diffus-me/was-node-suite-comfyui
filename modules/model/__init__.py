@@ -13,6 +13,7 @@ import re
 from collections.abc import Sequence
 from pathlib import Path
 
+import execution_context
 from .. import log
 
 __all__ = [
@@ -355,6 +356,7 @@ def shared_file(repo_id: str, filename: str) -> Path | None:
 
 
 def model_files(
+    exec_context: execution_context.ExecutionContext,
     folder: str,
     location: str | None = None,
     suffixes: Sequence[str] = (),
@@ -382,7 +384,7 @@ def model_files(
     # ComfyUI caches this list against each search directory's modification time and rebuilds it
     # when one moves, so the refresh key picks up a file added since startup. A schema is rebuilt
     # on every ``/object_info`` request, so a disk walk here would sit on that path.
-    names = folder_paths.get_filename_list(folder)
+    names = folder_paths.get_filename_list(exec_context, folder)
     if not suffixes:
         return list(names)
     wanted = tuple(suffixes)

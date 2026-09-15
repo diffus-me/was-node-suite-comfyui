@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import pil2tensor, tensor2pil
@@ -12,7 +13,7 @@ class ImageRemoveBackground(io.ComfyNode):
     """Make the light or dark part of each image transparent, returning RGBA."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Remove Background (Alpha)",
             display_name="Image Remove Background (Threshold)",

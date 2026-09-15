@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import LUT
@@ -35,7 +36,7 @@ class LoadLUT(io.ComfyNode):
     """Produce a colour lookup table from a file, a named look, or grading settings."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLoadLUT",
             display_name="Load LUT",

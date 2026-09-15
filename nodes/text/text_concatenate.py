@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 #: Input ids in socket order.
@@ -12,7 +13,7 @@ class TextConcatenate(io.ComfyNode):
     """Join connected text inputs in socket order, skipping the empty ones."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Concatenate",
             display_name="Text Concatenate",

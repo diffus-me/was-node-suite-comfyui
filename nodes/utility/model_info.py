@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 #: Attributes a loader's wrapper keeps its torch module on, tried in this order.
@@ -261,7 +262,7 @@ class ModelInfo(io.ComfyNode):
     """Name and measure the model on a loader wire."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         template = io.MatchType.Template(
             "model_info",
             [

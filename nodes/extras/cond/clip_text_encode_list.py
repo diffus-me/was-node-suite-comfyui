@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import CONDITIONING_SEQ
@@ -29,7 +30,7 @@ class CLIPTextEncodeList(io.ComfyNode):
     """Turn numbered prompt lines into a conditioning schedule."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="CLIPTextEncodeList",
             display_name="CLIP Text Encode Sequence (Advanced)",

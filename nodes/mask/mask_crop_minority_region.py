@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from . import mask_images, stack_masks
@@ -18,7 +19,7 @@ class MaskCropMinorityRegion(io.ComfyNode):
     """Crop every mask in the batch around its smallest connected region."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Mask Crop Minority Region",
             display_name="Mask Crop Minority Region",

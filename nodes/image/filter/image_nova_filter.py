@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import filtered_planes
@@ -54,7 +55,7 @@ class ImageNovaFilter(io.ComfyNode):
     """Remap an image's tones through a sine wave, producing hard psychedelic bands."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Nova Filter",
             display_name="Image Nova Filter",

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -16,7 +17,7 @@ class ImagePerspective(io.ComfyNode):
     """Warp a batch of images through a four-corner mapping."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImagePerspective",
             display_name="Image Perspective",

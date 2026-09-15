@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -16,7 +17,7 @@ class BoundedImageBlendWithMask(io.ComfyNode):
     """Scale a source into a target's bounds and blend it in through a supplied mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Bounded Image Blend with Mask",
             display_name="Bounded Image Blend with Mask",

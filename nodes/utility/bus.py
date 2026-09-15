@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import BUS
@@ -11,7 +12,7 @@ class BusNode(io.ComfyNode):
     """Pack five sockets into one BUS wire and unpack them again."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Bus Node",
             display_name="Bus Node",

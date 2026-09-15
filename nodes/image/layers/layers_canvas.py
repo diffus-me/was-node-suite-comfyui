@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules.image import layer_ops
@@ -23,7 +24,7 @@ class LayersCanvas(io.ComfyNode):
     """Set the canvas of a ``LAYERS`` document, moving its layers to suit."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLayersCanvas",
             display_name=NODE_NAME,

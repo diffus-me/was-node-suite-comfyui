@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import random
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -14,7 +15,7 @@ class TextFindAndReplaceByDictionary(io.ComfyNode):
     """Substitute every ``__term__`` in ``text`` with ``dictionary["term"]``."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Find and Replace by Dictionary",
             display_name="Text Find and Replace by Dictionary",

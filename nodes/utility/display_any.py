@@ -11,6 +11,7 @@ import math
 from collections.abc import Collection, Mapping
 from itertools import islice
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules import log
@@ -49,7 +50,7 @@ class DisplayAny(io.ComfyNode):
     """Write the value on the socket onto the node, and pass it on unchanged."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         template = io.MatchType.Template("display_any")
         return io.Schema(
             node_id="WASDisplayAny",

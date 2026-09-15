@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import image_planes
@@ -27,7 +28,7 @@ class ImageFrequencyBlend(io.ComfyNode):
     """Keep one picture's structure and take its detail from another."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageFrequencyBlend",
             display_name="Image Frequency Blend",

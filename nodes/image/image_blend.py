@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.convert.tensors import broadcast_image_planes, tensor2pil
@@ -14,7 +16,7 @@ class ImageBlend(io.ComfyNode):
     """Mix two images by a single percentage."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Blend",
             display_name="Image Blend",

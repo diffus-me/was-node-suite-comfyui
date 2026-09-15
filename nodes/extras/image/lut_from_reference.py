@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import LUT
@@ -21,7 +22,7 @@ class LUTFromReference(io.ComfyNode):
     """Measure the grade from one image to another and write it as a 3D lookup table."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLUTFromReference",
             display_name="LUT from Reference",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 NODE_NAME = "Collect to List"
@@ -58,7 +59,7 @@ class CollectToList(io.ComfyNode):
     """Join everything a fan-out produced into one value, a count and one string."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         template = io.MatchType.Template("collect_to_list")
         return io.Schema(
             node_id="WASCollectToList",

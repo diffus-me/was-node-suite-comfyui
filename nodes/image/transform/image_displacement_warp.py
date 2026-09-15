@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import dynamic
@@ -44,7 +45,7 @@ class ImageDisplacementWarp(io.ComfyNode):
     """Push each pixel of an image along the brightness of a displacement map."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Displacement Warp",
             display_name="Image Displacement Warp",

@@ -7,6 +7,7 @@ import math
 import os
 from pathlib import PureWindowsPath
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.io import picker
@@ -30,7 +31,7 @@ class CreateGridImage(io.ComfyNode):
     """Arrange the images in a directory into one grid image."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Create Grid Image",
             display_name="Create Grid Image",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import deps, log
@@ -19,7 +20,7 @@ class ImageSendHTTP(io.ComfyNode):
     """Upload every image in the batch to ``url`` as a multipart PNG request."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Send HTTP",
             display_name="Image Send HTTP",

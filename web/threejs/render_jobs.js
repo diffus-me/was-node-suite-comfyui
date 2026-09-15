@@ -10,14 +10,14 @@ import * as THREE from "../vendor/three/three.module.js";
 import { createPathTracer, prepareFrame, traceFrame } from "./pathtrace.js";
 import { createRuntime, toneMappingConstant } from "./runtime.js";
 
-const ROUTE = "/was/threejs/api/render";
+const ROUTE = "was/threejs/api/render";
 
 // How often the browser looks for a job, in milliseconds. A node files one and then waits, so
 // this is the delay before its render starts.
-const POLL_MS = 250;
+const POLL_MS = 250*100;
 
 // Backed off to this while nothing is queued, so an idle tab is not polling four times a second.
-const IDLE_MS = 1500;
+const IDLE_MS = 1500*100;
 
 // Seconds per step while the scene is wound forward to the capture time, and the most steps
 // taken. Part of a scene's motion is added up from each step rather than read off the clock,

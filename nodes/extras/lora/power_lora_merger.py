@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import WAS_LORA_MERGE_OPTIONS
@@ -75,7 +76,7 @@ class PowerLoraMerger(io.ComfyNode):
     """Combine several LoRAs into a single file that behaves like all of them at once."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASPowerLoraMerger",
             display_name="Power LoRA Merger",
@@ -192,7 +193,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_1", options=lora_names(), default=NONE_OPTION,
+                    "lora_1", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -204,7 +205,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_2", options=lora_names(), default=NONE_OPTION,
+                    "lora_2", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -216,7 +217,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_3", options=lora_names(), default=NONE_OPTION,
+                    "lora_3", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -228,7 +229,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_4", options=lora_names(), default=NONE_OPTION,
+                    "lora_4", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -240,7 +241,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_5", options=lora_names(), default=NONE_OPTION,
+                    "lora_5", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -252,7 +253,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_6", options=lora_names(), default=NONE_OPTION,
+                    "lora_6", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -264,7 +265,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_7", options=lora_names(), default=NONE_OPTION,
+                    "lora_7", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -276,7 +277,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_8", options=lora_names(), default=NONE_OPTION,
+                    "lora_8", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -288,7 +289,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_9", options=lora_names(), default=NONE_OPTION,
+                    "lora_9", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -300,7 +301,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_10", options=lora_names(), default=NONE_OPTION,
+                    "lora_10", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -312,7 +313,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_11", options=lora_names(), default=NONE_OPTION,
+                    "lora_11", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -324,7 +325,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_12", options=lora_names(), default=NONE_OPTION,
+                    "lora_12", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -336,7 +337,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_13", options=lora_names(), default=NONE_OPTION,
+                    "lora_13", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -348,7 +349,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_14", options=lora_names(), default=NONE_OPTION,
+                    "lora_14", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -360,7 +361,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_15", options=lora_names(), default=NONE_OPTION,
+                    "lora_15", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -372,7 +373,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_16", options=lora_names(), default=NONE_OPTION,
+                    "lora_16", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -384,7 +385,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_17", options=lora_names(), default=NONE_OPTION,
+                    "lora_17", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -396,7 +397,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_18", options=lora_names(), default=NONE_OPTION,
+                    "lora_18", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -408,7 +409,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_19", options=lora_names(), default=NONE_OPTION,
+                    "lora_19", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -420,7 +421,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_20", options=lora_names(), default=NONE_OPTION,
+                    "lora_20", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -432,7 +433,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_21", options=lora_names(), default=NONE_OPTION,
+                    "lora_21", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -444,7 +445,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_22", options=lora_names(), default=NONE_OPTION,
+                    "lora_22", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -456,7 +457,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_23", options=lora_names(), default=NONE_OPTION,
+                    "lora_23", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -468,7 +469,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_24", options=lora_names(), default=NONE_OPTION,
+                    "lora_24", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -480,7 +481,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_25", options=lora_names(), default=NONE_OPTION,
+                    "lora_25", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -492,7 +493,7 @@ class PowerLoraMerger(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_26", options=lora_names(), default=NONE_OPTION,
+                    "lora_26", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -523,6 +524,9 @@ class PowerLoraMerger(io.ComfyNode):
                         "to record what a run produced."
                     ),
                 ),
+            ],
+            hidden=[
+                io.Hidden.exec_context
             ],
             # Rows are added and removed on the canvas, so they arrive as extra inputs
             # rather than as declared sockets.
@@ -555,10 +559,11 @@ class PowerLoraMerger(io.ComfyNode):
                 "No LoRA is selected. Add a row with the node's Add LoRA button, choose a "
                 "file in it, and leave its weight above zero."
             )
-
+        exec_context = rows["exec_context"]
+        del rows["exec_context"]
         sources = []
         for row in selected:
-            full_path = folder_paths.get_full_path("loras", row.lora)
+            full_path = folder_paths.get_full_path(exec_context, "loras", row.lora)
             if full_path is None:
                 raise ValueError(
                     f"The LoRA `{row.lora}` is not in your LoRA folder. Refresh the list on "

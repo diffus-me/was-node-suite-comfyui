@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import filtered_planes
@@ -48,7 +49,7 @@ class ImageHighPassFilter(io.ComfyNode):
     """Strip an image down to its fine detail, discarding everything broad."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image High Pass Filter",
             display_name="Image High Pass Filter",

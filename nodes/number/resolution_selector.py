@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.image import resolution
@@ -11,7 +12,7 @@ class ResolutionSelector(io.ComfyNode):
     """Turn an aspect ratio and one measurement into a width and a height."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASResolutionSelector",
             display_name="Resolution Selector (Advanced)",
