@@ -6,6 +6,7 @@ import math
 
 import torch
 from PIL import Image
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import dynamic
@@ -544,7 +545,7 @@ class ImagePixelate(io.ComfyNode):
     """Turn images into pixel art: chunky pixels and a reduced palette."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Pixelate",
             display_name="Image Pixelate",

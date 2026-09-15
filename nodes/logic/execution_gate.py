@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 #: Stands in for a socket nothing is wired to, which None cannot say on a lazy input.
@@ -12,7 +13,7 @@ class ExecutionGate(io.ComfyNode):
     """Pass a value on while a switch is on, and end the graph there while it is off."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         match = io.MatchType.Template("was_execution_gate")
         return io.Schema(
             node_id="WASExecutionGate",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -9,7 +10,7 @@ class AnyGate(io.ComfyNode):
     """Pass a value on when a condition holds, and block the branch when it does not."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASAnyGate",
             display_name="Any Gate",

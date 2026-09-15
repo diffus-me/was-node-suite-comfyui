@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 
 import numpy as np
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import filtered_planes
@@ -50,7 +51,7 @@ class ImageLevelsAdjustment(io.ComfyNode):
     """Stretch an image's tonal range between a new black, mid and white point."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Levels Adjustment",
             display_name="Image Levels Adjustment",

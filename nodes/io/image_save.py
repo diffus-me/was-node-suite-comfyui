@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules import log
@@ -51,12 +52,12 @@ class ImageSave(io.ComfyNode):
     """Write every image in the batch to a permitted output directory under a numbered name."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Save",
             display_name="Image Save",
             search_aliases=["Image Save", "save image", "write image"],
-            hidden=[io.Hidden.prompt, io.Hidden.extra_pnginfo],
+            hidden=[io.Hidden.prompt, io.Hidden.extra_pnginfo, io.Hidden.exec_context],
             category="WAS Suite/IO",
             description=(
                 "Save images with a token-expanded path, a numbered filename and a choice "
@@ -281,6 +282,7 @@ class ImageSave(io.ComfyNode):
         show_previews=True,
         bit_depth=depths.DEFAULT,
         profile=None,
+        exec_context: execution_context.ExecutionContext=None
     ) -> io.NodeOutput:
         """Write the batch and preview what landed in the output directory.
 
@@ -295,7 +297,7 @@ class ImageSave(io.ComfyNode):
         metadata_source = cls if embed_workflow else None
 
 
-        output_dir = folder_paths.get_output_directory()
+        output_dir = folder_paths.get_output_directory(exec_context.user_hash)
         # The prefix is a path below the root, so its folders are resolved here, where a
         # refusal can name the root that was chosen. get_save_image_path holds the name to
         # that folder afterwards, which catches anything this missed.

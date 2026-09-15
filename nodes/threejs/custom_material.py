@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import THREE_MATERIAL, THREE_TEXTURE
@@ -22,7 +23,7 @@ class ThreeCustomMaterial(io.ComfyNode):
     """Build a material from a JavaScript body."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeCustomMaterial",
             display_name="Three Custom Material",

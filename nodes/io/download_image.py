@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from urllib.parse import urlsplit
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import deps, log
@@ -87,7 +88,7 @@ class DownloadImage(io.ComfyNode):
     """Fetch an image over HTTP and answer it the way the file loader does."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASDownloadImage",
             display_name="Download Image",

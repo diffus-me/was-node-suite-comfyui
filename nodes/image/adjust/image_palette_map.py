@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import LIST
@@ -19,7 +20,7 @@ class ImagePaletteMap(io.ComfyNode):
     """Repaint an image in a palette's colours, by nearest match or as a gradient."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImagePaletteMap",
             display_name="Image Palette Map",

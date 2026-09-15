@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import EMA_VFI_MODEL
@@ -16,8 +17,8 @@ class EMAVFIModelLoader(io.ComfyNode):
     """Build the interpolation network EMA-VFI Frame Interpolation runs on."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
-        found = frame_interpolation.offered()
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
+        found = frame_interpolation.offered(exec_context)
         return io.Schema(
             node_id="WASEMAVFIModelLoader",
             display_name="EMA-VFI Model Loader",

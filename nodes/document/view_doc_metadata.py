@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat.types import DICT, DOC, LIST
@@ -15,7 +16,7 @@ class ViewDocMetadata(io.ComfyNode):
     """A document's metadata, one field per socket, and the whole reading as text."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASViewDOCMetadata",
             display_name="View DOC Metadata",

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules import log
@@ -15,7 +16,7 @@ class TextAddTokenByInput(io.ComfyNode):
     """Store one custom token whose name and value both arrive as links."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Add Token by Input",
             display_name="Text Add Token by Input",

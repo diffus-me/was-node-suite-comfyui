@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import log
@@ -16,7 +17,7 @@ class VideoFrameSample(io.ComfyNode):
     """Sample frames from a video by one of several strategies."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASVideoFrameSample",
             display_name="Video Frame Sample (Advanced)",

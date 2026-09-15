@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -23,18 +25,18 @@ BLOCK_PRESETS = ["auto", "wan", "qwen", "flux", "zimg-turbo", "sd", "sdxl", "gen
 OUTPUT_SUBDIRECTORY = "loras"
 
 
-def lora_names() -> list[str]:
+def lora_names(exec_context: execution_context.ExecutionContext) -> list[str]:
     """The LoRA files this install offers."""
     import folder_paths
 
-    return folder_paths.get_filename_list("loras")
+    return folder_paths.get_filename_list(exec_context, "loras")
 
 
 class ApplyReweightedLoRA(io.ComfyNode):
     """Scale a LoRA's blocks by where they sit in the model, then apply it."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASApplyReweightedLoRA",
             display_name="Apply Reweighted LoRA",
@@ -66,7 +68,7 @@ class ApplyReweightedLoRA(io.ComfyNode):
                 ),
                 io.Combo.Input(
                     "lora_name",
-                    options=lora_names(),
+                    options=lora_names(exec_context),
                     tooltip=(
                         "The LoRA file to reweight, from your LoRA folder. It is read from "
                         "disk on every run, so the original file is never modified."
@@ -236,6 +238,9 @@ class ApplyReweightedLoRA(io.ComfyNode):
                     ),
                 ),
             ],
+            hidden=[
+                io.Hidden.exec_context
+            ]
         )
 
     @classmethod
@@ -257,6 +262,7 @@ class ApplyReweightedLoRA(io.ComfyNode):
         save_reweighted,
         output_filename,
         verify_roundtrip,
+        exec_context: execution_context.ExecutionContext,
     ) -> io.NodeOutput:
         """Scale the LoRA's blocks and apply it.
 
@@ -281,7 +287,7 @@ class ApplyReweightedLoRA(io.ComfyNode):
             clip, "Apply Reweighted LoRA", "clip", "text encoder", "checkpoint loader", "CLIP"
         )
 
-        source = folder_paths.get_full_path_or_raise("loras", lora_name)
+        source = folder_paths.get_full_path_or_raise(exec_context, "loras", lora_name)
         state = load_torch_file(str(source), safe_load=True)
 
         preset = (block_preset or "auto").lower().replace("_", "-")
@@ -323,7 +329,7 @@ class ApplyReweightedLoRA(io.ComfyNode):
                 back_scale,
                 last_block_scale,
             )
-            directory = Path(folder_paths.get_output_directory()) / OUTPUT_SUBDIRECTORY
+            directory = Path(folder_paths.get_output_directory(user_hash=exec_context.user_hash)) / OUTPUT_SUBDIRECTORY
             target = sandbox.resolve_write_file(directory, name)
             target.parent.mkdir(parents=True, exist_ok=True)
             save_file(

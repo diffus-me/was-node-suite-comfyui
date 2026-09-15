@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import DICT
@@ -11,7 +12,7 @@ class DictionaryConvert(io.ComfyNode):
     """Parse a Python dictionary literal into a DICT socket."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Dictionary Convert",
             display_name="Text Dictionary Convert",

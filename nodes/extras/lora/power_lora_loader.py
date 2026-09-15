@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -61,7 +62,7 @@ class PowerLoraLoader(io.ComfyNode):
     """Stack several LoRAs onto a model in one node, each with its own strength and switch."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASPowerLoraLoader",
             display_name="Power LoRA Loader",
@@ -123,7 +124,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_1", options=lora_names(), default=NONE_OPTION,
+                    "lora_1", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -135,7 +136,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_2", options=lora_names(), default=NONE_OPTION,
+                    "lora_2", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -147,7 +148,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_3", options=lora_names(), default=NONE_OPTION,
+                    "lora_3", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -159,7 +160,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_4", options=lora_names(), default=NONE_OPTION,
+                    "lora_4", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -171,7 +172,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_5", options=lora_names(), default=NONE_OPTION,
+                    "lora_5", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -183,7 +184,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_6", options=lora_names(), default=NONE_OPTION,
+                    "lora_6", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -195,7 +196,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_7", options=lora_names(), default=NONE_OPTION,
+                    "lora_7", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -207,7 +208,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_8", options=lora_names(), default=NONE_OPTION,
+                    "lora_8", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -219,7 +220,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_9", options=lora_names(), default=NONE_OPTION,
+                    "lora_9", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -231,7 +232,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_10", options=lora_names(), default=NONE_OPTION,
+                    "lora_10", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -243,7 +244,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_11", options=lora_names(), default=NONE_OPTION,
+                    "lora_11", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -255,7 +256,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_12", options=lora_names(), default=NONE_OPTION,
+                    "lora_12", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -267,7 +268,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_13", options=lora_names(), default=NONE_OPTION,
+                    "lora_13", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -279,7 +280,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_14", options=lora_names(), default=NONE_OPTION,
+                    "lora_14", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -291,7 +292,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_15", options=lora_names(), default=NONE_OPTION,
+                    "lora_15", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -303,7 +304,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_16", options=lora_names(), default=NONE_OPTION,
+                    "lora_16", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -315,7 +316,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_17", options=lora_names(), default=NONE_OPTION,
+                    "lora_17", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -327,7 +328,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_18", options=lora_names(), default=NONE_OPTION,
+                    "lora_18", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -339,7 +340,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_19", options=lora_names(), default=NONE_OPTION,
+                    "lora_19", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -351,7 +352,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_20", options=lora_names(), default=NONE_OPTION,
+                    "lora_20", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -363,7 +364,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_21", options=lora_names(), default=NONE_OPTION,
+                    "lora_21", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -375,7 +376,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_22", options=lora_names(), default=NONE_OPTION,
+                    "lora_22", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -387,7 +388,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_23", options=lora_names(), default=NONE_OPTION,
+                    "lora_23", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -399,7 +400,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_24", options=lora_names(), default=NONE_OPTION,
+                    "lora_24", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -411,7 +412,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_25", options=lora_names(), default=NONE_OPTION,
+                    "lora_25", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -423,7 +424,7 @@ class PowerLoraLoader(io.ComfyNode):
                     socketless=True, tooltip=ROW_ON_TIP,
                 ),
                 io.Combo.Input(
-                    "lora_26", options=lora_names(), default=NONE_OPTION,
+                    "lora_26", options=lora_names(exec_context), default=NONE_OPTION,
                     optional=True, socketless=True, tooltip=ROW_NAME_TIP,
                 ),
                 io.Float.Input(
@@ -478,6 +479,9 @@ class PowerLoraLoader(io.ComfyNode):
                 io.String.Output(display_name="name_25", tooltip=NAME_TOOLTIP.format(slot=25)),
                 io.String.Output(display_name="name_26", tooltip=NAME_TOOLTIP.format(slot=26)),
             ],
+            hidden=[
+                io.Hidden.exec_context
+            ]
         )
 
     @classmethod
@@ -504,8 +508,9 @@ class PowerLoraLoader(io.ComfyNode):
         from ...legacy.loaders.lora_loader import lora_state_dict
 
         require_input(model, "Power LoRA Loader", "model", "model", "checkpoint loader", "MODEL")
-
+        exec_context = rows["exec_context"]
         selected = lora_rows.rows_from_inputs(rows)
+        del exec_context["exec_context"]
         if not selected or strength == 0.0:
             logger.debug("no lora row is switched on, the model passes through")
             return io.NodeOutput(model, clip, "", *name_slots([]))
@@ -517,7 +522,7 @@ class PowerLoraLoader(io.ComfyNode):
             weight = float(row.weight) * float(strength)
             if weight == 0.0:
                 continue
-            path = folder_paths.get_full_path_or_raise("loras", row.lora)
+            path = folder_paths.get_full_path_or_raise(exec_context, "loras", row.lora)
             loaded.append((lora_state_dict(path), weight))
             names.append(os.path.splitext(os.path.basename(row.lora))[0])
             applied.append(f"{names[-1]} {weight:g}")

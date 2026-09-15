@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -9,7 +10,7 @@ class LogicBooleanPrimitive(io.ComfyNode):
     """Emit the boolean set on its widget."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Logic Boolean Primitive",
             display_name="Logic Boolean Primitive",

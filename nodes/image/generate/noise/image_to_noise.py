@@ -6,6 +6,7 @@ import random
 
 import numpy as np
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from .....modules.convert.tensors import pil2tensor, tensor2pil
@@ -15,7 +16,7 @@ class ImageToNoise(io.ComfyNode):
     """Turn an image into four-channel noise built from its own colours."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image to Noise",
             display_name="Image to Noise",

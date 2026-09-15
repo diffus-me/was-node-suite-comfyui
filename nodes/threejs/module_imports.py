@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import (
@@ -21,7 +22,7 @@ class ThreeModuleMaterial(io.ComfyNode):
     """Take a material out of a script module."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeImportMaterial",
             display_name="Three Import Material",
@@ -77,7 +78,7 @@ class ThreeModuleGeometry(io.ComfyNode):
     """Take a geometry out of a script module."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeImportGeometry",
             display_name="Three Import Geometry",
@@ -133,7 +134,7 @@ class ThreeModuleObject(io.ComfyNode):
     """Take an object out of a script module."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASThreeImportObject",
             display_name="Three Import Object",

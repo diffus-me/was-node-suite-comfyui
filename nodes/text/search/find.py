@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -11,7 +12,7 @@ class TextFind(io.ComfyNode):
     """Report whether ``text`` holds ``substring``, or matches ``pattern``."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Find",
             display_name="Text Find",

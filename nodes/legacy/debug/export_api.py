@@ -7,6 +7,7 @@ import os
 import re
 from pathlib import Path
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules.io import rooted
@@ -41,7 +42,7 @@ class ExportAPI(io.ComfyNode):
     """Serialise the running prompt to a numbered JSON file under ComfyUI's output tree."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Export API",
             display_name="Export API",

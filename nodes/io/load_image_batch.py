@@ -6,6 +6,7 @@ import glob
 import os
 import random
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import log
@@ -139,7 +140,7 @@ class LoadImageBatch(io.ComfyNode):
     """Load one image from a directory by index, in sequence, or at random."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Load Image Batch",
             display_name="Load Image Batch",

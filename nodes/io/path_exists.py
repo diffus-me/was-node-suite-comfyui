@@ -6,6 +6,7 @@ import os
 import stat
 from datetime import datetime
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import log
@@ -64,7 +65,7 @@ class PathExists(io.ComfyNode):
     """Report whether a path is on disk, and what is there."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASPathExists",
             display_name="Path Exists",

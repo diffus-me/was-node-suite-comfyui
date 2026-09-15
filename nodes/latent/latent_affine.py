@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import DICT
@@ -95,7 +97,7 @@ class LatentAffine(io.ComfyNode):
     """Multiply and offset a latent wherever a mask says to."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLatentAffine",
             display_name="Latent Affine",

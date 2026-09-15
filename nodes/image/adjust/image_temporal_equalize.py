@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 #: Frames either side the reference may be averaged over. A wider window is what flattens a
@@ -16,7 +17,7 @@ class ImageTemporalEqualize(io.ComfyNode):
     """Remap each frame of a batch onto a temporally averaged version of its own distribution."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageTemporalEqualize",
             display_name="Image Temporal Equalize",

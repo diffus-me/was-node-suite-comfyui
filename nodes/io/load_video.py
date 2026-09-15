@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import log
@@ -117,7 +118,7 @@ class LoadVideo(io.ComfyNode):
     """Load a video from ComfyUI's input folder, with the pack's selection and sizing surface."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLoadVideo",
             display_name="Load Video (Advanced)",

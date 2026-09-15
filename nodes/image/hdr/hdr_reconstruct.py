@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -82,7 +83,7 @@ class HDRReconstruct(io.ComfyNode):
     """Recover the linear light a clipped highlight lost."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASHDRReconstruct",
             display_name="HDR Reconstruct",

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import random
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import deps, log
@@ -31,7 +32,7 @@ class TextRandomPrompt(io.ComfyNode):
     """Return the prompt of a random image matching a Lexica search."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Random Prompt",
             display_name="Text Random Prompt",

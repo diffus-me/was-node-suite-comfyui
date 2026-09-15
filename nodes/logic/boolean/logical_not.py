@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -9,7 +10,7 @@ class LogicNOT(io.ComfyNode):
     """Emit the logical negation of a boolean."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Logic NOT",
             display_name="Logic NOT",

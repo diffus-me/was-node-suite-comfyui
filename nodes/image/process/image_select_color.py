@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 
@@ -10,7 +11,7 @@ class ImageSelectColor(io.ComfyNode):
     """Isolate one colour, blacking out everything else."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Select Color",
             display_name="Image Select Color",

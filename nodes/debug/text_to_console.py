@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.log import get_logger
@@ -13,7 +14,7 @@ class TextToConsole(io.ComfyNode):
     """Log the text arriving on the socket under a user-supplied heading."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text to Console",
             display_name="Text to Console",

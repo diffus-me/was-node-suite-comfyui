@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from . import float_mask, same_size_or_refuse
@@ -13,7 +15,7 @@ class MasksAdd(io.ComfyNode):
     """Sum two masks."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Masks Add",
             display_name="Masks Add",

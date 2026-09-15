@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from pathlib import Path
 
+import execution_context
 from .. import log
 from . import (
     NETWORK_FEATURE,
@@ -146,7 +147,7 @@ class Network:
     name: str
 
 
-def available() -> list[str]:
+def available(exec_context: execution_context.ExecutionContext) -> list[str]:
     """Which recognised checkpoints are actually on disk, in the order they are preferred.
 
     Returns:
@@ -157,7 +158,7 @@ def available() -> list[str]:
     order = list(CHECKPOINTS)
     found = [
         name
-        for name in model_files(FOLDER_KEY, FOLDER_LOCATION, SUFFIXES)
+        for name in model_files(exec_context, FOLDER_KEY, FOLDER_LOCATION, SUFFIXES)
         if Path(name).name in CHECKPOINTS
     ]
     return sorted(found, key=lambda name: (order.index(Path(name).name), name))
@@ -176,7 +177,7 @@ def spec_for(name: str) -> dict:
     return CHECKPOINTS.get(Path(str(name)).name, {})
 
 
-def offered() -> list[str]:
+def offered(exec_context: execution_context.ExecutionContext) -> list[str]:
     """What the checkpoint menu lists: what is on disk, and what a run could fetch.
 
     Returns:
@@ -185,7 +186,7 @@ def offered() -> list[str]:
         nothing is on disk and the feature is off, which a node turns into a combo holding a
         placeholder rather than an empty list ComfyUI cannot render.
     """
-    found = available()
+    found = available(exec_context=exec_context)
     if not network_enabled():
         return found
     return found + [name for name in FETCHABLE if name not in found]

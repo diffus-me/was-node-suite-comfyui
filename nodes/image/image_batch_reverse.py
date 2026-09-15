@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 
@@ -43,7 +45,7 @@ class ImageBatchReverse(io.ComfyNode):
     """Reverse a batch of frames, or append the reverse to make it ping-pong."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageBatchReverse",
             display_name="Image Batch Reverse",

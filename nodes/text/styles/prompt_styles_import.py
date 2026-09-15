@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -35,7 +36,7 @@ class PromptStylesImport(io.ComfyNode):
     """Store the styles held in a JSON library or an A1111 CSV."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASPromptStylesImport",
             display_name="Prompt Styles Import",

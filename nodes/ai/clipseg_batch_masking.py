@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import numpy as np
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import CLIPSEG_MODEL
@@ -20,7 +22,7 @@ class ClipsegBatchMasking(io.ComfyNode):
     """Mask up to six image sockets against up to six phrases in one pass."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="CLIPSeg Batch Masking",
             display_name="CLIPSeg Batch Masking",

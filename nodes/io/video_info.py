@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import VideoInput, io
 
 from ...modules import deps, log
@@ -91,7 +92,7 @@ class VideoInfo(io.ComfyNode):
     """Measure any video and answer its figures as separate numbers."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASVideoInfo",
             display_name="Video Info",

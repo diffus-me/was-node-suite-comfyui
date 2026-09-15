@@ -6,6 +6,7 @@ import os
 import random
 from pathlib import Path
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import config, log
@@ -54,7 +55,7 @@ class CacheNode(io.ComfyNode):
     """Write the connected latent, image batch and conditioning to the cache directory."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Cache Node",
             display_name="Cache Node",

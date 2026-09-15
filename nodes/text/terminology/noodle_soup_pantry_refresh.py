@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -21,7 +22,7 @@ class NoodleSoupPantryRefresh(io.ComfyNode):
     """Fetch the published pantry and merge it into the stored one."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASNoodleSoupPantryRefresh",
             display_name="Noodle Soup Pantry Refresh",

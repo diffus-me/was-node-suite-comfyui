@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat.types import DOC
@@ -24,7 +25,7 @@ class DocToHTML(io.ComfyNode):
     """A document's markup on a string socket, as a fragment or a whole page."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASConvertDOCToHTML",
             display_name="Convert DOC to HTML",

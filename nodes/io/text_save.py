@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.io import rooted
@@ -19,7 +20,7 @@ class SaveTextFile(io.ComfyNode):
     """Write text to a numbered file."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Save Text File",
             display_name="Save Text File",

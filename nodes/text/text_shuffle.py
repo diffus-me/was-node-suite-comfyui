@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import random
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -11,7 +12,7 @@ class TextShuffle(io.ComfyNode):
     """Split ``text`` on ``separator``, shuffle the parts and join them back."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text Shuffle",
             display_name="Text Shuffle",

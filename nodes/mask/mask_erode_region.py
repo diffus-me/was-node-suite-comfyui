@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from . import morph_masks
@@ -11,7 +12,7 @@ class MaskErodeRegion(io.ComfyNode):
     """Shrink the white area of every mask in the batch by binary erosion."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Mask Erode Region",
             display_name="Mask Erode Region",

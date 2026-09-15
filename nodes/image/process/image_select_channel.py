@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import dynamic
@@ -15,7 +16,7 @@ class ImageSelectChannel(io.ComfyNode):
     """Keep one of the three colour channels and show it as grey."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Select Channel",
             display_name="Image Select Channel",

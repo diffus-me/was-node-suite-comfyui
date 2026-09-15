@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.io import rooted
@@ -30,7 +31,7 @@ class ZipSave(io.ComfyNode):
     """Collect files from the input, output and temp folders into a zip archive."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASZipSave",
             display_name="Zip Save",

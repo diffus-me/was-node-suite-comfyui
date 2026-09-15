@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 #: Folder each source lists, against the name shown on the widget.
@@ -24,10 +25,11 @@ FOLDERS: tuple[tuple[str, str], ...] = (
 EMPTY = "None"
 
 
-def folder_options(folder: str) -> list[str]:
+def folder_options(exec_context: execution_context.ExecutionContext, folder: str) -> list[str]:
     """The files a model folder holds.
 
     Args:
+        exec_context: exec_context
         folder: A key of ComfyUI's folder table, such as ``"loras"``.
 
     Returns:
@@ -36,7 +38,7 @@ def folder_options(folder: str) -> list[str]:
     try:
         import folder_paths
 
-        found = list(folder_paths.get_filename_list(folder))
+        found = list(folder_paths.get_filename_list(exec_context, folder))
     except Exception:
         return [EMPTY]
     return found or [EMPTY]
@@ -56,7 +58,7 @@ def sampler_options() -> tuple[list[str], list[str]]:
         return [EMPTY], [EMPTY]
 
 
-def build_options() -> list[io.DynamicCombo.Option]:
+def build_options(exec_context: execution_context.ExecutionContext) -> list[io.DynamicCombo.Option]:
     """One option per source, each carrying its own list.
 
     Returns:
@@ -71,7 +73,7 @@ def build_options() -> list[io.DynamicCombo.Option]:
                     io.Combo.Input(
                         "value",
                         display_name=shown,
-                        options=folder_options(folder),
+                        options=folder_options(exec_context, folder),
                         tooltip=(
                             f"Which {shown} to name. A sub-folder is part of the name: "
                             f"Flux/detail_v2.safetensors."
@@ -114,7 +116,7 @@ class ComboSelector(io.ComfyNode):
     """Name a model file, a sampler or a scheduler and send it to another node's dropdown."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASComboSelector",
             display_name="Combo Selector",
@@ -136,7 +138,7 @@ class ComboSelector(io.ComfyNode):
             inputs=[
                 io.DynamicCombo.Input(
                     "source",
-                    options=build_options(),
+                    options=build_options(exec_context=exec_context),
                     tooltip=(
                         "What to pick from: checkpoints, loras, vae, clip, text_encoders, "
                         "diffusion_models, controlnet, style_models, hypernetworks, "

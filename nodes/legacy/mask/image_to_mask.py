@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import image_planes, tensor2pil
@@ -16,7 +17,7 @@ class ImageToLatentMask(io.ComfyNode):
     """Pull a single channel out of every image in a batch as one ``(height, width)`` mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image to Latent Mask",
             display_name="Image to Latent Mask",

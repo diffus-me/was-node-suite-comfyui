@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import curves, dynamic
@@ -13,7 +14,7 @@ class ImageCurves(io.ComfyNode):
     """Bend an image's tonal response along a curve drawn per channel."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageCurves",
             display_name="Image Curves",

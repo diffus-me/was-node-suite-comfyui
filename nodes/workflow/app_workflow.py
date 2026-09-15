@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat.types import DICT
@@ -39,7 +40,7 @@ class AppWorkflow(io.ComfyNode):
     """Run a saved app workflow, feeding its exposed inputs and taking its results."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASAppWorkflow",
             display_name=NODE_NAME,

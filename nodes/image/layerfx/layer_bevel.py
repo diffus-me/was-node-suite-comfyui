@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import layer_fx
@@ -17,7 +18,7 @@ class LayerBevel(io.ComfyNode):
     """Bake a lit bevel or emboss into one layer of a stack."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLayerBevel",
             display_name="Layer Bevel",

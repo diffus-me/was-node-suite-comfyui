@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import IMAGE_BOUNDS
@@ -32,7 +33,7 @@ class BoundingBoxesToBounds(io.ComfyNode):
     """Read a detector's bounding boxes as an ``IMAGE_BOUNDS`` value."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASBoundingBoxesToBounds",
             display_name="Bounding Boxes to Bounds",
@@ -94,7 +95,7 @@ class BoundsToBoundingBoxes(io.ComfyNode):
     """Emit an ``IMAGE_BOUNDS`` value as ComfyUI bounding boxes."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASBoundsToBoundingBoxes",
             display_name="Bounds to Bounding Boxes",

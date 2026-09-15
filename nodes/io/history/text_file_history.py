@@ -6,6 +6,7 @@ import os
 import time
 from io import StringIO
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -75,7 +76,7 @@ class TextFileHistoryLoader(io.ComfyNode):
     """Read one of the text files this pack has loaded or written before, comments dropped."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Text File History Loader",
             display_name="Text File History Loader",

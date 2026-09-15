@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import IMAGE_BOUNDS
@@ -16,7 +17,7 @@ class BoundedImageCropWithMask(io.ComfyNode):
     """Crop each image to its mask's bounding box and emit the bounds used."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Bounded Image Crop with Mask",
             display_name="Bounded Image Crop with Mask",

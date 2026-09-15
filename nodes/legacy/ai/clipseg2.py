@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import numpy as np
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.types import CLIPSEG_MODEL
@@ -100,7 +101,7 @@ class Clipseg2(io.ComfyNode):
     """Mask what a phrase describes, tiled and then hard-thresholded."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="CLIPSEG2",
             display_name="CLIPSeg Tiled Masking",

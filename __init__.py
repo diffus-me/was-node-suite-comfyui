@@ -388,7 +388,7 @@ class NodeLoader:
         kept = []
         for node_cls in declared:
             try:
-                node_id = node_cls.GET_SCHEMA().node_id
+                node_id = node_cls.GET_SCHEMA(exec_context=None).node_id
             except Exception as error:
                 # load_custom_node wraps the entrypoint in a single try/except, so a
                 # schema that raises there takes down every node in the pack with it.

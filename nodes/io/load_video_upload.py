@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 from urllib.parse import urlsplit
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import log
@@ -141,7 +142,7 @@ class LoadVideoUpload(io.ComfyNode):
     """Load a video chosen in ComfyUI's input folder, or downloaded from a web address."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLoadVideoUpload",
             display_name="Load Video (Upload)",

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import config, deps
@@ -40,7 +41,7 @@ class LoadDocument(io.ComfyNode):
     """One document, read from the path a widget names."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLoadDocument",
             display_name="Load Document",

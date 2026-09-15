@@ -6,6 +6,7 @@ A bounds row is ``(rmin, rmax, cmin, cmax)`` with every edge inclusive.
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat import limits
@@ -54,7 +55,7 @@ class BoundsToMask(io.ComfyNode):
     """Paint each row of an ``IMAGE_BOUNDS`` value as a filled rectangle on a mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASBoundsToMask",
             display_name="Bounds to Mask",

@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 import torch
 import torch.nn.functional as F
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -231,7 +232,7 @@ class AdaptiveDifferenceLatentUpscale(io.ComfyNode):
     """Upscale a latent by blending a nearest and a smooth enlargement per position."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WAS_AdaptiveDifferenceLatentUpscale",
             display_name="WAS Adaptive Difference Latent Upscale (Damped)",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import image_planes, stack_images, tensor2pil
@@ -50,7 +51,7 @@ class ImageFDOFFilter(io.ComfyNode):
     """Blur an image everywhere its depth map is dark, leaving the bright areas sharp."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image fDOF Filter",
             display_name="Image fDOF Filter",

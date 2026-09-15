@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules.compat import limits
@@ -19,7 +20,7 @@ class LayerReplaceImage(io.ComfyNode):
     """Put a different picture into one layer of a ``LAYERS`` document."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLayerReplaceImage",
             display_name="Layer Replace Image",

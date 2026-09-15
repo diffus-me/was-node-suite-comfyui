@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from . import mask_images, stack_masks
@@ -14,7 +15,7 @@ class MaskGaussianRegion(io.ComfyNode):
     """Blur every mask in the batch by a Gaussian radius."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Mask Gaussian Region",
             display_name="Mask Gaussian Region",

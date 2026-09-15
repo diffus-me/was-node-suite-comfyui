@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import DICT
@@ -14,7 +15,7 @@ class AffineOptions(io.ComfyNode):
     """Build the options dictionary the affine nodes read their pattern settings from."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASAffineOptions",
             display_name="Affine Options",

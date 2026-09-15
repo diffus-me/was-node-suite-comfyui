@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 import statistics
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.compat.types import LIST, NUMBER
@@ -22,7 +23,7 @@ class NumberListStatistics(io.ComfyNode):
     """Measure a list of numbers onto one figure per output."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASNumberListStatistics",
             display_name="Number List Statistics",

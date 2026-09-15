@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from . import mask_planes
@@ -16,7 +17,7 @@ class MaskBatchToMask(io.ComfyNode):
     """Select a single mask from a batch by index."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Mask Batch to Mask",
             display_name="Mask Batch to Mask",

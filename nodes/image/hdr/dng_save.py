@@ -5,6 +5,8 @@ from __future__ import annotations
 import os
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -60,7 +62,7 @@ class DNGSave(io.ComfyNode):
     """Write every image in the batch as a DNG holding 16-bit linear readings."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASDNGSave",
             display_name="DNG Save",
@@ -136,6 +138,9 @@ class DNGSave(io.ComfyNode):
                     ),
                 ),
             ],
+            hidden=[
+                io.Hidden.exec_context
+            ],
             is_output_node=True,
         )
 
@@ -146,6 +151,7 @@ class DNGSave(io.ComfyNode):
         filename_prefix="ComfyUI_raw",
         profile="sRGB primaries",
         layout="demosaiced",
+        exec_context: execution_context.ExecutionContext = None,
     ) -> io.NodeOutput:
         """Write one DNG per image and report what landed in the output directory.
 
@@ -170,7 +176,7 @@ class DNGSave(io.ComfyNode):
         # cleared prefix widget is resolved with a stand-in that is dropped again below.
         named = filename_prefix or PLACEHOLDER_PREFIX
         full_output_folder, resolved, _, _, _ = folder_paths.get_save_image_path(
-            named, folder_paths.get_output_directory(), images[0].shape[1], images[0].shape[0]
+            named, folder_paths.get_output_directory(user_hash=exec_context.user_hash), images[0].shape[1], images[0].shape[0]
         )
         destination = sandbox.resolve_write(full_output_folder)
         os.makedirs(destination, exist_ok=True)

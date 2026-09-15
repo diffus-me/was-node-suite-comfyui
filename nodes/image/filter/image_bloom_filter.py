@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.convert.tensors import filtered_planes
@@ -38,7 +39,7 @@ class ImageBloomFilter(io.ComfyNode):
     """Add a soft glow that spills out of an image's bright areas."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Bloom Filter",
             display_name="Image Bloom Filter",

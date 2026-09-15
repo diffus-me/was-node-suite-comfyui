@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.compat import limits
@@ -18,7 +19,7 @@ class MaskStatistics(io.ComfyNode):
     """Measure what a mask covers and answer the figures as separate numbers."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASMaskStatistics",
             display_name="Mask Statistics",

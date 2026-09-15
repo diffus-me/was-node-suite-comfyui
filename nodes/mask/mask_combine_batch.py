@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.interface import mask_report
@@ -12,7 +14,7 @@ class MasksCombineBatch(io.ComfyNode):
     """Sum every mask in a batch into a single mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Masks Combine Batch",
             display_name="Masks Combine Batch",

@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 
@@ -285,7 +286,7 @@ class PowerPreprocessor(io.ComfyNode):
     """Answer a question about an image, choosing which question on the node."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASPowerPreprocessor",
             display_name="Power Preprocessor",

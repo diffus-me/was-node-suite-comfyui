@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image import dynamic
@@ -14,7 +15,7 @@ class ImageRotate(io.ComfyNode):
     """Rotate every image in a batch by a multiple of 90 degrees."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Rotate",
             display_name="Image Rotate (Advanced)",

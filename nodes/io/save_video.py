@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules.io import rooted
@@ -38,7 +39,7 @@ class SaveVideo(io.ComfyNode):
     """Write a video from frames and sound, or from a video, under a numbered name."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASSaveVideo",
             display_name="Save Video (Advanced)",
@@ -178,7 +179,7 @@ class SaveVideo(io.ComfyNode):
                     tooltip="Its name alone, without the folder.",
                 ),
             ],
-            hidden=[io.Hidden.prompt, io.Hidden.extra_pnginfo],
+            hidden=[io.Hidden.prompt, io.Hidden.extra_pnginfo, io.Hidden.exec_context],
         )
 
     @classmethod
@@ -186,6 +187,7 @@ class SaveVideo(io.ComfyNode):
         cls, images=None, video=None, audio=None, fps=24.0, root=rooted.DEFAULT,
         filename_prefix="ComfyUI", filename_delimiter="_", filename_number_padding=4,
         container="auto", codec="auto", crf=0.0, overwrite=False,
+        exec_context: execution_context.ExecutionContext=None,
     ) -> io.NodeOutput:
         """Write the file and answer where it went.
 
@@ -202,7 +204,7 @@ class SaveVideo(io.ComfyNode):
             codec: Video codec.
             crf: Quality, 0 for the encoder's default.
             overwrite: Reuse one name rather than numbering.
-
+            exec_context: exec_context
         Returns:
             The video, the full path and the file name.
 

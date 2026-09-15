@@ -5,6 +5,7 @@ Every figure in this module is gigabytes of the device ComfyUI computes on.
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ...modules import log
@@ -95,7 +96,7 @@ class FreeMemory(io.ComfyNode):
     """Unload models, empty the cache and collect garbage in the middle of a graph."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         template = io.MatchType.Template("free_memory_passthrough")
         return io.Schema(
             node_id="WASFreeMemory",

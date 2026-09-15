@@ -7,6 +7,7 @@ from typing import Any
 
 import torch
 import torch.nn.functional as F
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -715,7 +716,7 @@ class LatentUpscaleHybrid(io.ComfyNode):
     """Blend a blocky and a smooth latent enlargement using a decoded edge mask."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLatentUpscaleHybrid",
             display_name="Latent Hybrid Upscale",

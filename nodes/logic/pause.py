@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 
@@ -9,7 +10,7 @@ class Pause(io.ComfyNode):
     """Stop a run at this node and wait for Resume, passing its input on unchanged."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         template = io.MatchType.Template("pause_passthrough")
         return io.Schema(
             node_id="WASPause",

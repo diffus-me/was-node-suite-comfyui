@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules import config
@@ -25,7 +26,7 @@ class TextToDoc(io.ComfyNode):
     """A document built from one string and the metadata fields beside it."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASTextToDOC",
             display_name="Text to DOC",

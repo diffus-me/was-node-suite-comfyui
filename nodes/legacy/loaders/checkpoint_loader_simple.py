@@ -4,23 +4,24 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io
 
 REQUIRES = "loaders"
 
 
-def checkpoint_names() -> list[str]:
+def checkpoint_names(exec_context: execution_context.ExecutionContext) -> list[str]:
     """The checkpoints this install offers."""
     import folder_paths
 
-    return folder_paths.get_filename_list("checkpoints")
+    return folder_paths.get_filename_list(exec_context, "checkpoints")
 
 
 class CheckpointLoaderSimple(io.ComfyNode):
     """Load a checkpoint and report its name."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Checkpoint Loader (Simple)",
             display_name="Checkpoint Loader (Simple, Advanced)",
@@ -39,7 +40,7 @@ class CheckpointLoaderSimple(io.ComfyNode):
             inputs=[
                 io.Combo.Input(
                     "ckpt_name",
-                    options=checkpoint_names(),
+                    options=checkpoint_names(exec_context),
                     tooltip="The checkpoint file in models/checkpoints to load.",
                 ),
             ],

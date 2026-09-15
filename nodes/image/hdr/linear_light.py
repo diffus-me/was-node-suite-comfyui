@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import torch
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -24,7 +25,7 @@ class LinearLight(io.ComfyNode):
     """Undo or apply the sRGB transfer function, with an exposure adjustment in stops."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLinearLight",
             display_name="Linear Light",

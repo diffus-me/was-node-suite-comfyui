@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.sampling.temporal_noise import MAX_HOLD, TemporalNoiseHold
@@ -11,7 +12,7 @@ class TemporalNoiseHoldNode(io.ComfyNode):
     """Starting noise for a video sampler, correlated along the latent's time axis."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASTemporalNoiseHold",
             display_name="Temporal Noise Hold",

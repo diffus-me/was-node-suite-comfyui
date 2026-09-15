@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.interface import batch_report
@@ -51,7 +53,7 @@ class LatentBatch(io.ComfyNode):
     """Join latents from a slot list that grows a socket as each one is filled."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Latent Batch",
             display_name="Latent Batch (Advanced)",

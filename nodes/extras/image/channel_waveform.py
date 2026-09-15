@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules import log
@@ -165,7 +166,7 @@ class ChannelWaveform(io.ComfyNode):
     """Plot each colour channel as a broadcast waveform, and the three side by side."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASChannelWaveform",
             display_name="Image Waveform",

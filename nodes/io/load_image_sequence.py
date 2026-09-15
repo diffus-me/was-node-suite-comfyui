@@ -5,6 +5,8 @@ from __future__ import annotations
 import os
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.io import picker
@@ -32,7 +34,7 @@ class LoadImageSequence(io.ComfyNode):
     """Load every image in a directory, in filename order, as one batch."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASLoadImageSequence",
             display_name="Load Image Sequence",

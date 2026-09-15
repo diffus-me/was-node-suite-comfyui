@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.image.batching import (
@@ -19,7 +21,7 @@ class ImageBatch(io.ComfyNode):
     """Concatenate the connected image slots into one IMAGE."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Batch",
             display_name="Image Batch",

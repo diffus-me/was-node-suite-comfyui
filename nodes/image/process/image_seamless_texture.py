@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.image.seamless import LARGEST_BLEND, make_seamless
@@ -12,7 +13,7 @@ class ImageSeamlessTexture(io.ComfyNode):
     """Blend an image's opposite edges together so copies of it tile without a visible join."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Image Seamless Texture",
             display_name="Image Seamless Texture",

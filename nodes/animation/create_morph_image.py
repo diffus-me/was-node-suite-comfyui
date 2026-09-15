@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.io import rooted
@@ -19,7 +20,7 @@ class CreateMorphImage(io.ComfyNode):
     """Blend two images into an animation and write it to disk."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Create Morph Image",
             display_name="Create Morph Image",

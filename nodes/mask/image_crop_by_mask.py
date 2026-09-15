@@ -7,6 +7,8 @@ edges. A bounds row is ``(rmin, rmax, cmin, cmax)`` with every edge inclusive.
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from . import mask_images, mask_planes, stack_masks
@@ -38,7 +40,7 @@ class ImageCropByMask(io.ComfyNode):
     """Crop every image of a batch to the area its mask marks."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASImageCropByMask",
             display_name="Image Crop by Mask",

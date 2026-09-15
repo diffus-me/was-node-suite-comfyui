@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import torch
+
+import execution_context
 from comfy_api.latest import io
 
 from ...modules.image import fit
@@ -21,7 +23,7 @@ class ImageBatchAdvanced(io.ComfyNode):
     """Concatenate images from a growing slot list, fitting them to one size on request."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         # The settings are declared before the slot list, so they keep their place as the list
         # grows and are read before the sockets they govern.
         return io.Schema(

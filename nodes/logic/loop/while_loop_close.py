@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io, ui
 
 from ....modules.compat.types import DICT, NUMBER, WAS_LOOP
@@ -38,7 +39,7 @@ class WhileLoopClose(io.ComfyNode):
     # slot happens to hold that index instead.
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         templates = [io.MatchType.Template(f"while_loop_close_value_{n}") for n in range(1, 9)]
         return io.Schema(
             node_id="WASWhileLoopClose",

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 REQUIRES = "switches"
@@ -11,7 +12,7 @@ class UpscaleModelSwitch(io.ComfyNode):
     """Select between two upscale models with a boolean."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="Upscale Model Switch",
             display_name="Upscale Model Switch",

@@ -6,6 +6,7 @@ edges, so the window runs ``right - left`` across and ``bottom - top`` down.
 
 from __future__ import annotations
 
+import execution_context
 from comfy_api.latest import io
 
 from ....modules.compat.sockets import require_input
@@ -17,7 +18,7 @@ class CropDataToNumbers(io.ComfyNode):
     """Split a ``CROP_DATA`` crop window into plain integers and a line of text."""
 
     @classmethod
-    def define_schema(cls) -> io.Schema:
+    def define_schema(cls, exec_context: execution_context.ExecutionContext) -> io.Schema:
         return io.Schema(
             node_id="WASCropDataToNumbers",
             display_name="Crop Data to Numbers",
